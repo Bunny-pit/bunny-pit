@@ -4,5 +4,13 @@
 }
 
 body {
-  background-color: antiquewhite;
+}
+
+h2 {
+  font-size: 64px;
+  font-weight: 800;
+}
+p {
+  font-size: 24px;
+  font-weight: 600;
 }
