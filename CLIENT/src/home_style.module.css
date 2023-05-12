@@ -66,6 +66,17 @@
 .main_container .main_text .point_text {
   color: #06e8b1;
 }
+.main_container .main_text .button {
+  color: #fff;
+  font-size: 26px;
+  margin-top: 60px;
+  padding: 10px 40px;
+  border-radius: 30px;
+  border: 3px solid #06e8b1;
+  background-color: #06e8b1;
+  font-weight: 800;
+  cursor: pointer;
+}
 
 .sec_container {
   width: 100%;
@@ -125,6 +136,7 @@
   border: 1px solid #fff;
 }
 footer {
+  margin-top: 80px;
   width: 100%;
   background-color: #8e8e8e;
 }

@@ -34,10 +34,12 @@ export function HomePage() {
           <div className={home_style.main_text}>
             <h2>친구들과 함께 만드는,</h2>
             <h2 className={home_style.point_text}>우리의 공간</h2>
+
             <p>
               자유롭게 사진을 올리고, 공유할 수 있는 우리만의 공간을
               <br /> 버니톡과 함께 만들어가요
             </p>
+            <button className={home_style.button}>바로가기</button>
           </div>
         </div>
       </div>
