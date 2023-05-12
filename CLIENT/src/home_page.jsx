@@ -1,12 +1,13 @@
 import React from "react";
 import home_style from "./home_style.module.css";
+import { Link } from "react-router-dom";
 
 export function HomePage() {
   return (
     <div className={home_style.container}>
       <header className={home_style.header}>
         <div className={home_style.header_container}>
-          <div className={home_style.logo_container}>
+          <Link to="/" className={home_style.logo_container}>
             <img
               src="/assets/logo.png"
               alt="logo"
@@ -17,10 +18,14 @@ export function HomePage() {
               alt="logo_text"
               className={home_style.logo_text}
             ></img>
-          </div>
+          </Link>
           <div className={home_style.login_container}>
-            <span className={home_style.login_button}>로그인</span>
-            <span className={home_style.join_button}>회원가입</span>
+            <Link to="/login" className={home_style.login_button}>
+              로그인
+            </Link>
+            <Link to="/join" className={home_style.join_button}>
+              회원가입
+            </Link>
           </div>
         </div>
       </header>

@@ -35,7 +35,9 @@
   display: flex;
   align-items: center; /* 방향이 row 기준: 세로 중앙 정렬*/
 }
-.login_container span {
+.login_container .login_button,
+.login_container .join_button {
+  text-decoration: none;
   font-size: 24px;
   font-weight: bold;
   margin-left: auto;
