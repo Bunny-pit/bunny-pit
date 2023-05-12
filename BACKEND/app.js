@@ -1,19 +1,27 @@
-require("dotenv").config();
-const { PORT, MONGODB_URL } = process.env;
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const express = require("express");
 const app = express();
-app.use(express.urlencoded({ extended: true }));
+dotenv.config();
+// Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
+app.use(express.json());
 
-const mongoose = require("mongoose");
+// Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
+app.use(express.urlencoded({ extended: false }));
+
+const mongodbUrl = process.env.MONGODB_URL;
+
 mongoose
-  .connect(MONGODB_URL, {
+  .connect(mongodbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("MongoDB Connected..."))
-  .catch(err => console.log(err));
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch(err => {
+    console.error(err);
+  });
 
-app.get("/", (req, res) => res.send("Hello World!~~"));
-
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`));
+export default app;

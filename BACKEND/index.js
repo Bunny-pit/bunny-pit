@@ -1,6 +1,7 @@
-const app = require("./app");
+import app from "./app.js";
 
-const { PORT } = process.env;
-const port = PORT || 3000;
+const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`Example app listening on port ${port}`));
+app.listen(port, "0.0.0.0", () => {
+  console.log(`정상적으로 서버를 시작하였습니다.  http://localhost:${port}`);
+});
