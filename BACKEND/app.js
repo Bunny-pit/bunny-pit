@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import errorHandler from "./db/middlewares/error_handler.js";
+import { userModel } from "./db/models/user_model.js";
 
 const app = express();
 dotenv.config();
@@ -20,8 +22,11 @@ mongoose
   .then(() => {
     console.log("MongoDB connected");
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
   });
+
+// 에러 핸들러 미들웨어 사용
+app.use(errorHandler);
 
 export default app;

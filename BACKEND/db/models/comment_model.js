@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-import { CommentSchema } from "../schemas/comment_schema";
-import PostModel from "./post_model";
+import { CommentSchema } from "../schemas/comment_schema.js";
+import postModel from "./post_model.js";
 
 const Comment = mongoose.model("comments", CommentSchema);
-const postModel = new PostModel();
 
 class CommentModel {
   // 댓글 생성 및 게시글에 댓글 추가
@@ -65,4 +64,6 @@ class CommentModel {
   }
 }
 
-export default CommentModel;
+const commentModel = new CommentModel();
+
+export { commentModel };

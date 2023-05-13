@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 const CommentSchema = new Schema({
   // 댓글 작성자 참조
   userId: {
