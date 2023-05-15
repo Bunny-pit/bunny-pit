@@ -6,15 +6,15 @@ const postRouter = new Router();
 postRouter.post("/new-post", postService.createPost);
 
 // 게시물 수정
-postRouter.patch("/update", postService.updatePost);
+postRouter.patch("/update:id", postService.updatePost);
 
 // 게시물 삭제
-postRouter.delete("/delete", postService.deletePost);
+postRouter.delete("/delete:id", postService.deletePost);
 
 // 게시물 조회
 postRouter.get("/get-posts", postService.getPosts);
 
 // 게시물 상세
-postRouter.get("/post-detail", postService.getPostById);
+postRouter.get("/post-detail:id", postService.getPostById);
 
 export { postRouter };
