@@ -3,18 +3,18 @@ import { Router } from "express";
 const postRouter = new Router();
 
 // 게시물 작성
-postRouter.post("/new-post", postService.createPost());
+postRouter.post("/new-post", postService.createPost);
 
 // 게시물 수정
-postRouter.patch("/update", postService.updatePost());
+postRouter.patch("/update", postService.updatePost);
 
 // 게시물 삭제
-postRouter.delete("/delete", postService.deletePost());
+postRouter.delete("/delete", postService.deletePost);
 
 // 게시물 조회
-postRouter.get("/get-posts", postService.getPosts());
+postRouter.get("/get-posts", postService.getPosts);
 
 // 게시물 상세
-postRouter.get("/post-detail", postService.getPostById());
+postRouter.get("/post-detail", postService.getPostById);
 
 export { postRouter };
