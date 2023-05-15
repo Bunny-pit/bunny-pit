@@ -28,11 +28,6 @@ mongoose
   });
 
 // router
-// JSON 형식의 데이터를 파싱하기 위한 미들웨어
-app.use(express.json());
-
-// URL-encoded 형식의 데이터를 파싱하기 위한 미들웨어
-app.use(express.urlencoded({ extended: false }));
 
 // post 라우터 사용
 app.use("/api/posts", postRouter);
