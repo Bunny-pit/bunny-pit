@@ -1,6 +1,6 @@
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 
 if (!fs.existsSync("public")) {
   fs.mkdirSync("public");
@@ -27,4 +27,4 @@ const userImageUpload = (req, res, next) => {
   });
 };
 
-module.exports = { userImageUpload };
+export { userImageUpload };

@@ -17,7 +17,7 @@ import {
 const userRouter = Router();
 
 //회원가입
-userRouter.post("/users/join", signUp);
+userRouter.post("/join", signUp);
 
 //로그인
 userRouter.post("/users/login", logIn);
@@ -45,7 +45,7 @@ userRouter.get(
   "/api/users/mypage/:uid",
   loginRequired,
   userImageUpload,
-  createUserProfile,
+  createUserProfile
 );
 
 //마이페이지 수정
@@ -53,5 +53,7 @@ userRouter.patch(
   "/api/users/mypage/:uid",
   loginRequired,
   userImageUpload,
-  updateProfileInfo,
+  updateProfileInfo
 );
+
+export { userRouter };

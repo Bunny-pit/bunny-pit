@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { CommentSchema } from "../schemas/comment_schema.js";
-import postModel from "./post_model.js";
+import { postModel } from "./post_model.js";
 
 const Comment = mongoose.model("comments", CommentSchema);
 

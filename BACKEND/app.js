@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import errorHandler from "./db/middlewares/error_handler.js";
 import { postRouter } from "./db/routers/post_router.js";
 import { commentRouter } from "./db/routers/comment_router.js";
+import { userRouter } from "./db/routers/user_router.js";
 
 // server open
 const app = express();
@@ -29,6 +30,9 @@ mongoose
   });
 
 // router
+// user 라우터 사용
+app.use("/api/users", userRouter);
+
 // post 라우터 사용
 app.use("/api/posts", postRouter);
 

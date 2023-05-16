@@ -1,5 +1,5 @@
-import { userModel } from "../db";
-import { errorHandler } from "../middlewares/error_handler.js";
+import { userModel } from "../models/user_model.js";
+import errorHandler from "../middlewares/error_handler.js";
 import "dotenv/config";
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -47,12 +47,12 @@ const logIn = async (req, res, next) => {
     const user = await userModel.findByEmail(email);
     if (!user) {
       throw new Error(
-        "해당 이메일을 가진 사용자는 존재하지 않습니다. 다시 확인해주세요.",
+        "해당 이메일을 가진 사용자는 존재하지 않습니다. 다시 확인해주세요."
       );
     }
     if (user.role === "disabled") {
       throw new Error(
-        "해당 이메일은 탈퇴처리된 사용자입니다. 관리자에게 문의하세요.",
+        "해당 이메일은 탈퇴처리된 사용자입니다. 관리자에게 문의하세요."
       );
     }
     //비밀번호 일치 여부 확인
@@ -130,7 +130,7 @@ const updateUserInfo = async (req, res, next) => {
 
     const isPasswordCorrect = await bcrypt.compare(
       currentPassword,
-      foundUser.password,
+      foundUser.password
     );
 
     if (!isPasswordCorrect) {
@@ -196,7 +196,7 @@ const deleteUserByAdmin = async (req, res, next) => {
 
     const userIdToDelete = req.params.userId;
     const userToDelete = users.find(
-      (user) => user._id.toString() === userIdToDelete,
+      (user) => user._id.toString() === userIdToDelete
     );
 
     if (!userToDelete) {
@@ -257,7 +257,7 @@ const createUserProfile = async (req, res, next) => {
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
       { userImage, introduction },
-      { new: true },
+      { new: true }
     );
 
     if (!updatedUser) {
@@ -288,12 +288,12 @@ const updateProfileInfo = async (req, res, next) => {
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
       { userImage, introduction },
-      { new: true },
+      { new: true }
     );
 
     if (!updatedUser) {
       return next(
-        new errorHandler(400, "프로필 정보를 업데이트할 수 없습니다."),
+        new errorHandler(400, "프로필 정보를 업데이트할 수 없습니다.")
       );
     }
 
@@ -311,7 +311,7 @@ const updateProfileInfo = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   signUp,
   logIn,
   userInfo,
