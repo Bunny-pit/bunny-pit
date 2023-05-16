@@ -23,6 +23,12 @@ class CommentModel {
   }
 
   // 댓글 조회
+  async getAllCommentsByPostId(postId) {
+    const comments = await Comment.find({ postId: postId }).populate("userId");
+    return comments;
+  }
+
+  // 댓글 조회 (상세)
   async findById(commentId) {
     // populate로 받아온 사용자 정보와 댓글 id 조회하기
     const comment = await Comment.findById(commentId).populate("userId");

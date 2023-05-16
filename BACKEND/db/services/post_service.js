@@ -72,6 +72,18 @@ class PostService {
       const postId = req.params.id;
       // req.body에서 제목이랑 내용 가져옴
       const { title, content } = req.body;
+      // 로그인한 사용자id 가져옴
+      const userId = req.user.id;
+
+      const post = await postModel.findById(postId);
+
+      if (!post) {
+        throw new Error("게시글을 찾을 수 없습니다.");
+      }
+
+      if (post.userId !== userId) {
+        throw new Error("게시글을 수정할 권한이 없습니다.");
+      }
 
       // 해당 id의 게시글에서 제목, 내용 수정하고 수정된 게시글 반환 (new: true)
       const updatedPost = await postModel.findByIdAndUpdate(
@@ -82,11 +94,6 @@ class PostService {
         },
         { new: true }
       );
-
-      // 수정된 게시글이 잘못된 경우 에러 메세지
-      if (!updatedPost) {
-        throw new Error("게시글을 찾을 수 없습니다.");
-      }
 
       // 수정된 게시글 정보와 성공 메세지 전송
       res
@@ -103,13 +110,20 @@ class PostService {
     try {
       // req.params에서 게시글id 가져옴
       const postId = req.params.id;
-      // 해당 id의 게시글 db에서 삭제
-      const deletedPost = await postModel.findByIdAndDelete(postId);
+      const userId = req.user.id;
 
-      // 해당 게시글이 없을 경우 에러 메세지
-      if (!deletedPost) {
+      const post = await postModel.findById(postId);
+
+      if (!post) {
         throw new Error("게시글을 찾을 수 없습니다.");
       }
+
+      if (post.userId !== userId) {
+        throw new Error("게시글을 삭제할 권한이 없습니다.");
+      }
+
+      // 해당 id의 게시글 db에서 삭제
+      const deletedPost = await postModel.findByIdAndDelete(postId);
 
       // 삭제된 게시글 정보와 성공 메세지 전송
       res
