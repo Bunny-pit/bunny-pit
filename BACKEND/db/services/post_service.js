@@ -120,6 +120,20 @@ class PostService {
       next(err);
     }
   };
+
+  // 좋아요 로직
+  postLike = async (req, res, next) => {
+    try {
+      const postId = req.params.id;
+      const userId = req.user.id;
+
+      const post = await postModel.toggleLike(postId, userId);
+
+      res.status(200).json({ message: "좋아요가 반영되었습니다.", post });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 const postService = new PostService();
