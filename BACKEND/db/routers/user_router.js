@@ -20,19 +20,19 @@ const userRouter = Router();
 userRouter.post("/join", signUp);
 
 //로그인
-userRouter.post("/users/login", logIn);
+userRouter.post("/login", logIn);
 
 //유저정보 불러오기
-userRouter.get("/users/:uid", loginRequired, userInfo);
+userRouter.get("/:uid", loginRequired, userInfo);
 
 //유저정보 수정
-userRouter.patch("/users/:uid", loginRequired, updateUserInfo);
+userRouter.patch("/:uid", loginRequired, updateUserInfo);
 
 //회원 탈퇴 (유저 role -> disabled로 변경) && 관리자계정은 스스로 탈퇴 불가능
-userRouter.patch("/users/delete/:uid", loginRequired, deleteUser);
+userRouter.patch("/delete/:uid", loginRequired, deleteUser);
 
 //유저 페이지 팔로우 토글
-userRouter.post("/users/follow/:uid", loginRequired, toggleFollowUsers);
+userRouter.post("/follow/:uid", loginRequired, toggleFollowUsers);
 
 //관리자 회원정보 전체조회
 userRouter.get("/admin/users", adminOnly, adminUserInfo);
@@ -42,18 +42,24 @@ userRouter.patch("/admin/delete/:uid", adminOnly, deleteUserByAdmin);
 
 //마이페이지 조회
 userRouter.get(
-  "/api/users/mypage/:uid",
+  "/mypage/:uid",
   loginRequired,
   userImageUpload,
-  createUserProfile
+  createUserProfile,
 );
-
+//마이페이지 등록
+userRouter.post(
+  "/mypage/:uid",
+  loginRequired,
+  userImageUpload,
+  createUserProfile,
+);
 //마이페이지 수정
 userRouter.patch(
-  "/api/users/mypage/:uid",
+  "/mypage/:uid",
   loginRequired,
   userImageUpload,
-  updateProfileInfo
+  updateProfileInfo,
 );
 
 export { userRouter };
