@@ -50,7 +50,7 @@
   justify-content: center;
 }
 
-.mainProfile>.mainAvata {
+.mainProfile>.mainAvatar {
   width: 292px;
   margin-right: 70px;
 
@@ -60,7 +60,7 @@
   cursor: pointer;
 }
 
-.mainProfile>.mainAvata>img {
+.mainProfile>.mainAvatar>img {
   border-radius: 150px;
 }
 
@@ -85,6 +85,10 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.mainHeader>.top>img {
+  cursor: pointer;
 }
 
 .mainHeader>.top>button {
@@ -126,7 +130,7 @@
 }
 
 .mainHeader>.middle>ul {
-  list-style:none;
+  list-style: none;
   display: flex;
 }
 
@@ -153,7 +157,7 @@
 .mainNav>ul {
   display: flex;
   align-items: center;
-  margin-right : 40px;
+  margin-right: 40px;
   font-size: 12px;
 }
 
@@ -216,4 +220,58 @@
   align-items: center;
   border: 3px #000 solid;
   border-radius: 100px;
+}
+
+.modalHeader {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+
+ 
+
+  border-bottom: 1px #FB7C7C solid;
+}
+
+.modalClose {
+
+  margin-right: 0;
+}
+
+.modalTitle {
+  margin-left: -30px;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  text-align: center;
+  color: #FB7C7C;
+  font-size: 13px;
+}
+
+.modalMain {
+  margin: 50px 0 50px 0;
+  color: black;
+}
+
+.modalUploadBackground {
+  background-color: #EBEBEB;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.modalUploadFile {
+  margin: 50px 0 50px 0;
+  cursor: pointer;
+
+}
+
+.modalMain>.modalUploadWrite {
+  margin-bottom: 50px;
+}
+
+.modalMain>.modalUploadWrite>input {
+  border: 1px solid #d1d0d0;
+  width: 643px;
+  height: 150px;
 }
