@@ -15,9 +15,14 @@ const ModalComponent = () => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
-        Open Modal
-      </Button>
+      <img id="addPost"
+            width="28px"
+            height="28px"
+            src="/assets/add_icon.svg"
+            alt="add_icon"
+            onClick={handleOpen}
+            style={{cursor:'pointer'}}
+          />
       <Modal
         open={open}
         onClose={handleClose}
@@ -91,12 +96,8 @@ function MainHeader() {
             src="/assets/chat_icon.svg"
             alt="send_icon"
           />
-          <img id="addPost"
-            width="28px"
-            height="28px"
-            src="/assets/add_icon.svg"
-            alt="add_icon"
-          />
+          <ModalComponent />
+          
           <img
             width="28px"
             height="28px"
