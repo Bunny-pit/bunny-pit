@@ -86,7 +86,7 @@ const logIn = async (req, res, next) => {
   }
 };
 
-//유저정보 불러오기
+//유저정보 불러오기(단일 정보)
 const userInfo = async (req, res, next) => {
   try {
     const userId = req.params.uid;
@@ -101,8 +101,225 @@ const userInfo = async (req, res, next) => {
   }
 };
 
+//관리자 회원정보 전체 조회
+const adminUserInfo = async (req, res, next) => {
+  try {
+    const users = await userModel.findAll();
+
+    if (!users || users.length === 0) {
+      return next(new errorHandler(400, "사용자 정보를 찾을 수 없습니다."));
+    }
+    res.status(200).json({ message: "전체 회원 정보조회 성공", data: users });
+  } catch (error) {
+    console.error(error);
+    next(new errorHandler(500, "회원정보 전체조회 실패"));
+  }
+};
+
+//유저정보 수정하기
+const updateUserInfo = async (req, res, next) => {
+  const { currentPassword, newPassword, userName } = req.body;
+  const userId = req.user.userId;
+
+  try {
+    const foundUser = await userModel.findById(userId);
+
+    if (!foundUser) {
+      return next(new AppError(400, "존재하지 않는 아이디입니다."));
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      foundUser.password,
+    );
+
+    if (!isPasswordCorrect) {
+      return next(new AppError(400, "현재 비밀번호가 일치하지 않습니다."));
+    }
+
+    const updateData = {};
+
+    if (newPassword) {
+      updateData.password = await bcrypt.hash(newPassword, 10);
+    }
+    if (userName) {
+      updateData.userName = userName;
+    }
+
+    const updatedUser = await userModel.update({
+      userId,
+      updateData,
+    });
+
+    res.status(200).json({
+      message: "회원정보 수정 성공",
+      data: {
+        userId: updatedUser.userId,
+        userName: updatedUser.userName,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    next(new errorHandler(500, "회원정보 수정 실패"));
+  }
+};
+
+//회원탈퇴
+const deleteUser = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    let user = await userModel.findById(userId);
+    const currentRole = user.role;
+    const updatedInfo = { role: "disabled" };
+
+    if (currentRole === "basic-user") {
+      user = await userModel.update({ userId, update: updatedInfo });
+    }
+    if (currentRole === "admin") {
+      throw new errorHandler("관리자는 본인의 계정을 삭제할 수 없습니다.");
+    }
+    res.json({ message: "정상적으로 탈퇴되었습니다.", data: user });
+  } catch (error) {
+    console.error(error);
+    next(new errorHandler(500, "사용자 탈퇴실패"));
+  }
+};
+
+//관리자 회원 삭제
+const deleteUserByAdmin = async (req, res, next) => {
+  try {
+    // 모든 사용자 정보 조회
+    const users = await userModel.findAll();
+    if (!users || users.length === 0) {
+      return next(new errorHandler("사용자 정보를 찾을 수 없습니다."));
+    }
+
+    const userIdToDelete = req.params.userId;
+    const userToDelete = users.find(
+      (user) => user._id.toString() === userIdToDelete,
+    );
+
+    if (!userToDelete) {
+      return next(new errorHandler("삭제할 사용자를 찾을 수 없습니다."));
+    }
+
+    res.json({ message: "사용자 삭제 성공", data: userToDelete });
+  } catch (error) {
+    console.error(error);
+    next(new errorHandler("사용자 삭제 실패"));
+  }
+};
+
+//유저의 페이지 팔로우 토글
+const toggleFollowUsers = async (req, res, next) => {
+  try {
+    const { userId, targetUserId } = req.params;
+
+    // 유저와 대상 유저 정보 가져오기
+    const user = await userModel.findById(userId);
+    const targetUser = await userModel.findById(targetUserId);
+
+    if (!user || !targetUser) {
+      return next(new errorHandler("사용자 정보를 찾을 수 없습니다."));
+    }
+
+    // 팔로우 토글
+    const isFollowing = user.following.includes(targetUserId);
+
+    if (isFollowing) {
+      // 이미 팔로우 중인 경우 언팔로우
+      user.following.pull(targetUserId);
+      targetUser.followers.pull(userId);
+    } else {
+      // 팔로우하지 않은 경우 팔로우
+      user.following.push(targetUserId);
+      targetUser.followers.push(userId);
+    }
+
+    // 변경 사항 저장
+    await user.save();
+    await targetUser.save();
+
+    res.json({ message: "팔로우 토글 성공" });
+  } catch (error) {
+    console.error(error);
+    next(new errorHandler("팔로우 토글 실패"));
+  }
+};
+
+//마이페이지 프로필 생성
+const createUserProfile = async (req, res, next) => {
+  try {
+    const { userImage, introduction } = req.body;
+    const userId = req.user.userId;
+
+    // 유저 정보 업데이트
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      { userImage, introduction },
+      { new: true },
+    );
+
+    if (!updatedUser) {
+      return next(new errorHandler(400, "유저 정보를 업데이트할 수 없습니다."));
+    }
+
+    res.status(200).json({
+      message: "마이페이지 정보 업데이트 성공",
+      data: {
+        userId: updatedUser.userId,
+        userImage: updatedUser.userImage,
+        introduction: updatedUser.introduction,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    next(new errorHandler(500, "마이페이지 정보 업데이트 실패"));
+  }
+};
+
+//마이페이지 프로필 수정
+const updateProfileInfo = async (req, res, next) => {
+  try {
+    const { userImage, introduction } = req.body;
+    const userId = req.user.userId;
+
+    // 사용자 정보 업데이트
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      { userImage, introduction },
+      { new: true },
+    );
+
+    if (!updatedUser) {
+      return next(
+        new errorHandler(400, "프로필 정보를 업데이트할 수 없습니다."),
+      );
+    }
+
+    res.status(200).json({
+      message: "프로필 정보 수정 성공",
+      data: {
+        userId: updatedUser.userId,
+        userImage: updatedUser.userImage,
+        introduction: updatedUser.introduction,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    next(new errorHandler(500, "프로필 정보 수정 실패"));
+  }
+};
+
 module.exports = {
   signUp,
   logIn,
   userInfo,
+  adminUserInfo,
+  updateUserInfo,
+  deleteUser,
+  deleteUserByAdmin,
+  toggleFollowUsers,
+  createUserProfile,
+  updateProfileInfo,
 };
