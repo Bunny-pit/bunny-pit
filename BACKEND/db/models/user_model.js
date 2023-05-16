@@ -35,6 +35,21 @@ export class UserModel {
     const updatedUser = await User.findOneAndUpdate(filter, update, option);
     return updatedUser;
   }
+
+  //팔로워 토글 기능
+  async toggleFollower(userId, followerId) {
+    const user = await User.findById(userId);
+    const followerIndex = user.followers.indexOf(followerId);
+
+    if (followerIndex === -1) {
+      user.followers.push(followerId);
+    } else {
+      user.followers.splice(followerIndex, 1);
+    }
+    // 업데이트된 좋아요 상태를 db에 저장하고 반환함
+    await user.save();
+    return user;
+  }
 }
 
 const userModel = new UserModel();
