@@ -10,6 +10,20 @@ function PostDetail() {
     navigate(-1);
   };
 
+  // 임시 쓰레기 데이터
+  const user = {
+    userImage: "assets/userImageDummy.png",
+    userNickName: "닉네임인데 어쩔건데",
+  };
+
+  const post = {
+    imageUrl: ["assets/postImageDummy.png", "assets/test.png"],
+    content: "어 반갑다",
+    likes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    comments: [],
+    createdAt: new Date(),
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -22,17 +36,27 @@ function PostDetail() {
               <h2>게시물</h2>
             </div>
           </div>
-          <div className={styles.input_wrapper}>
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="아이디 검색하기"
-              onChange={(e) => {
-                e.preventDefault();
-                console.log(e.target.value);
-              }}
-            />
+          <div>
+            <img src={user.userImage} alt="프로필 이미지" />
+            <span>{user.userNickName}</span>
           </div>
+          <div>
+            <img src={post.imageUrl[0]} alt="게시물 이미지" />
+          </div>
+          <div>
+            <button>
+              <img src="assets/like_icon.png" alt="좋아요 버튼" />
+            </button>
+            <button>
+              <img src="assets/comment_icon.png" alt="댓글 버튼" />
+            </button>
+            <button>
+              <img src="assets/post_save_icon.png" alt="게시물 저장 버튼" />
+            </button>
+            <span>{post.createdAt.toLocaleDateString()}</span>
+          </div>
+          <div>{post.content}</div>
+          <div>{post.comments}</div>
         </div>
       </div>
     </>
