@@ -1,4 +1,5 @@
 
+
 import './App.css';
 import { HomePage } from "./home_page";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -14,6 +15,7 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
+
 }
 
 export default App;
