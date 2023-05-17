@@ -148,12 +148,23 @@ function MainUserHome() {
           Authorization: `Bearer ${token}`,
         },
       };
-
-      const res = await axios.get("/api/posts/get-posts", config);
-      const data = await res.data;
-      setPosts(data);
+      const url = "http://localhost:3000/api/posts/get-posts";
+      await axios.get(url, config).then((res) => setPosts(res.data));
     } catch (err) {
       alert(err.message);
+    }
+  };
+
+  // 친구 초대 버튼 클릭시 url 복사하는 함수
+  const copyToClipboard = async () => {
+    // 현재 페이지의 url 가져옴
+    const currentPageUrl = window.location.href;
+
+    try {
+      await navigator.clipboard.writeText(currentPageUrl);
+      alert("Url이 복사 되었습니다!");
+    } catch (err) {
+      alert("Url 복사에 실패했습니다.", err);
     }
   };
 
@@ -174,7 +185,7 @@ function MainUserHome() {
               <h2>{nickName}</h2>
             </div>
             <div className={styles.top}>
-              <button>친구 초대</button>
+              <button onClick={copyToClipboard}>친구 초대</button>
               <button>프로필 편집</button>
               <img
                 width="30px"
