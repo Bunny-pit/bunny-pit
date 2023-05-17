@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useNavigate } from "react";
 import chat_style from "./chat_style.module.css";
 import { Link } from "react-router-dom";
+// import Chatting from "./chatting";
 
 export function ChatPage() {
+  /*
+  받아와야 할 것들 
+  전체 메세지,
+  상대 아이디,
+  시간,
+  사진
+  */
   return (
     <>
       <div className={chat_style.container}>
@@ -78,12 +86,17 @@ export function ChatPage() {
 }
 
 function Message(props) {
+  // const navigate = useNavigate();
+  // const navigateToChat = () => {
+  //   navigate("/chat");
+  // };
+
   return (
-    <div className={chat_style.message_container}>
+    <Link to={`/chat/${props.userId}`} className={chat_style.message_container}>
       <div
         className={chat_style.message_wrapper}
         onClick={() => {
-          console.log("아직 준비중이에요 ㅋㅋ");
+          console.log("test");
         }}
       >
         <img src={props.img} alt="프로필 사진" />
@@ -92,6 +105,6 @@ function Message(props) {
           <div className={chat_style.message_date}>{props.date} 전에 보냄</div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

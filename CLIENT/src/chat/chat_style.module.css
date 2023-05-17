@@ -47,10 +47,11 @@
 }
 
 .message_container {
-  margin-top: 50px;
+  text-decoration: none;
 }
 
 .message_container .message_wrapper {
+  margin-top: 50px;
   cursor: pointer;
   background-color: #ffd4d4;
   border-radius: 150px;
@@ -58,11 +59,15 @@
 }
 .message_container .message_wrapper .text {
   padding-left: 30px;
+
   width: 90%;
   font-size: 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+}
+.message_container .message_wrapper .text .message_id {
+  color: #000;
 }
 .message_container .message_wrapper .text .message_date {
   color: #a8a8a8;
