@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Grid, Modal, Button, Box } from "@mui/material"
-import styles from './main_page.module.css';
+import React, { useState, useEffect } from "react";
+import { Container, Grid, Modal, Button, Box } from "@mui/material";
+import styles from "./main_page.module.css";
+import axios from "axios";
 
 const ModalComponent = () => {
   const [open, setOpen] = React.useState(false);
@@ -15,25 +16,34 @@ const ModalComponent = () => {
 
   return (
     <div>
-      <img id="addPost"
-            width="28px"
-            height="28px"
-            src="/assets/add_icon.svg"
-            alt="add_icon"
-            onClick={handleOpen}
-            style={{cursor:'pointer'}}
-          />
+      <img
+        id="addPost"
+        width="28px"
+        height="28px"
+        src="/assets/add_icon.svg"
+        alt="add_icon"
+        onClick={handleOpen}
+        style={{ cursor: "pointer" }}
+      />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-          width: 650, height: 800, bgcolor: 'background.paper', boxShadow: 24, p: 4
-        }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 650,
+            height: 800,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
           <div className={styles.modalHeader}>
             <img
               className={styles.modalClose}
@@ -51,12 +61,19 @@ const ModalComponent = () => {
                 src="./assets/upload_icon.png"
                 width="180px"
                 height="200px"
-                alt="upload_icon" />
+                alt="upload_icon"
+              />
             </div>
             <div className={styles.modalUploadWrite}>
-              <input placeHolder={'문구입력...'} />
+              <input placeHolder={"문구입력..."} />
             </div>
-            <Button variant="contained" style={{ width: '650px', backgroundColor: '#FFD4D4' }}> 공유하기 </Button>
+            <Button
+              variant="contained"
+              style={{ width: "650px", backgroundColor: "#FFD4D4" }}
+            >
+              {" "}
+              공유하기{" "}
+            </Button>
           </div>
         </Box>
       </Modal>
@@ -64,14 +81,7 @@ const ModalComponent = () => {
   );
 };
 
-
-
-
-
 function MainHeader() {
-
-
-
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
@@ -97,7 +107,7 @@ function MainHeader() {
             alt="send_icon"
           />
           <ModalComponent />
-          
+
           <img
             width="28px"
             height="28px"
@@ -113,14 +123,40 @@ function MainHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }
 
 function MainUserHome() {
-  const [nickName, setNickName] = useState('유저 닉네임 state')
-  const [postCount, setPostCount] = useState(0)
-  const [follower, setFollower] = useState(0)
-  const [profileMessage, setProfileMessage] = useState('유저 상태 메시지')
+  const [nickName, setNickName] = useState("유저 닉네임 state");
+  const [postCount, setPostCount] = useState(0);
+  const [follower, setFollower] = useState(0);
+  const [profileMessage, setProfileMessage] = useState("유저 상태 메시지");
+
+  const [posts, setPosts] = useState([]); // 게시물 데이터 저장 state
+
+  useEffect(() => {
+    // db에서 게시물 가져오는 함수 호출
+    axiosGetPost();
+  }, []);
+
+  // jwt token에서 userId 추출해서 게시물 조회하는 api 호출
+  const axiosGetPost = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const res = await axios.get("/api/posts/get-posts", config);
+      const data = await res.data;
+      setPosts(data);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
     <main className={styles.main}>
       <section className={styles.mainSection}>
@@ -149,8 +185,12 @@ function MainUserHome() {
             </div>
             <div className={styles.middle}>
               <ul>
-                <li>게시물 <b>{postCount}</b></li>
-                <li>나를 좋아하는 버니들 <b>{follower}</b></li>
+                <li>
+                  게시물 <b>{postCount}</b>
+                </li>
+                <li>
+                  나를 좋아하는 버니들 <b>{follower}</b>
+                </li>
               </ul>
             </div>
             <h3>{profileMessage}</h3>
@@ -167,20 +207,36 @@ function MainUserHome() {
           </ul>
         </div>
         <div className={styles.mainPosts}>
-          <div className={styles.mainLayout}>
-            <div className={styles.mainCircle}>
-              <img width="32" height="32" src="./assets/camera_icon.svg" alt="camera_icon" />
+          {postCount === 0 ? (
+            <div className={styles.mainLayout}>
+              <div className={styles.mainCircle}>
+                <img
+                  width="32"
+                  height="32"
+                  src="./assets/camera_icon.svg"
+                  alt="camera_icon"
+                />
+              </div>
+              <h4>게시물 없음</h4>
             </div>
-            <h4>{postCount === 0 ? '게시물 없음' : '게시물 있음'}</h4>
-          </div>
+          ) : (
+            <Grid container sapcing={2}>
+              {posts.map((post, index) => (
+                <Grid item xs={4} key={index}>
+                  <img
+                    src={post.imageUrl}
+                    alt={`post-${index}`}
+                    style={{ width: "100%", heigth: "auto" }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </div>
       </section>
     </main>
-  )
+  );
 }
-
-
-
 
 export default function Main() {
   return (
@@ -190,11 +246,9 @@ export default function Main() {
       <MainUserHome />
       <Container>
         <Grid container spacing={1.5}>
-          <Grid item xs={12} sm={4} md={4}>
-
-          </Grid>
+          <Grid item xs={12} sm={4} md={4}></Grid>
         </Grid>
       </Container>
     </>
-  )
+  );
 }
