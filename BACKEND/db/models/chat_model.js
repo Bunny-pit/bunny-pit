@@ -1,136 +1,95 @@
 import mongoose from "mongoose";
-import { chatRoomSchema } from "./chatRoomSchema";
-import { chatSchema } from "./chatSchema";
+import { chatSchema } from "../schemas/chat_schema.js";
+import { chatRoomSchema } from "../schemas/chatRoom_schema.js";
 
-const ChatRoom = mongoose.model("ChatRoom", chatRoomSchema);
 const Chat = mongoose.model("Chat", chatSchema);
+const ChatRoom = mongoose.model("ChatRoom", chatRoomSchema);
 
-class ChatRoomService {
-  // 채팅방 생성
-  async createChatRoom(user1Id, user2Id) {
-    try {
-      const chatRoom = new ChatRoom({
-        user1: user1Id,
-        user2: user2Id,
-      });
-      const savedChatRoom = await chatRoom.save();
-      return savedChatRoom;
-    } catch (error) {
-      console.error("채팅방 생성 에러:", error);
-      throw error;
-    }
+class ChatModel {
+  // 새로운 채팅 메시지 생성
+  async createChatMessage(chatMessageInfo) {
+    const newChatMessage = await Chat.create(chatMessageInfo);
+    return newChatMessage;
+  }
+
+  // 모든 채팅 메시지 조회
+  async findAllChatMessages() {
+    const chatMessages = await Chat.find({})
+      .populate("chatRoom")
+      .populate("sender")
+      .populate("receiver");
+    return chatMessages;
+  }
+
+  // 채팅 메시지 ID로 채팅 메시지 조회
+  async findChatMessageById(chatMessageId) {
+    const chatMessage = await Chat.findById(chatMessageId)
+      .populate("chatRoom")
+      .populate("sender")
+      .populate("receiver");
+    return chatMessage;
+  }
+
+  // 채팅 메시지 ID를 사용하여 채팅 메시지 업데이트
+  async updateChatMessage(chatMessageId, updateData) {
+    const updatedChatMessage = await Chat.findByIdAndUpdate(
+      chatMessageId,
+      updateData,
+      { new: true },
+    );
+    return updatedChatMessage;
+  }
+
+  // 채팅 메시지 ID를 사용하여 채팅 메시지 삭제
+  async deleteChatMessageById(chatMessageId) {
+    const result = await Chat.findByIdAndDelete(chatMessageId);
+    return result;
+  }
+}
+
+class ChatRoomModel {
+  // 새로운 채팅방 생성
+  async createChatRoom(chatRoomInfo) {
+    const newChatRoom = await ChatRoom.create(chatRoomInfo);
+    return newChatRoom;
   }
 
   // 모든 채팅방 조회
-  async getAllChatRooms() {
-    try {
-      const chatRooms = await ChatRoom.find();
-      return chatRooms;
-    } catch (error) {
-      console.error("채팅방 조회 에러:", error);
-      throw error;
-    }
+  async findAllChatRooms() {
+    const chatRooms = await ChatRoom.find({})
+      .populate("user1")
+      .populate("user2")
+      .populate("messages");
+    return chatRooms;
   }
 
-  // 특정 채팅방 조회
-  async getChatRoomById(chatRoomId) {
-    try {
-      const chatRoom = await ChatRoom.findById(chatRoomId);
-      return chatRoom;
-    } catch (error) {
-      console.error("채팅방 조회 에러:", error);
-      throw error;
-    }
+  // 채팅방 ID로 채팅방 조회
+  async findChatRoomById(chatRoomId) {
+    const chatRoom = await ChatRoom.findById(chatRoomId)
+      .populate("user1")
+      .populate("user2")
+      .populate("messages");
+    return chatRoom;
   }
 
-  // 채팅방 갱신
+  // 채팅방 ID를 사용하여 채팅방 업데이트
   async updateChatRoom(chatRoomId, updateData) {
-    try {
-      const updatedChatRoom = await ChatRoom.findByIdAndUpdate(
-        chatRoomId,
-        updateData,
-        { new: true },
-      );
-      return updatedChatRoom;
-    } catch (error) {
-      console.error("채팅방 갱신 에러:", error);
-      throw error;
-    }
+    const updatedChatRoom = await ChatRoom.findByIdAndUpdate(
+      chatRoomId,
+      updateData,
+      { new: true },
+    );
+    return updatedChatRoom;
   }
 
-  // 채팅방 삭제
-  async deleteChatRoom(chatRoomId) {
-    try {
-      await ChatRoom.findByIdAndDelete(chatRoomId);
-      console.log("채팅방이 삭제되었습니다.");
-    } catch (error) {
-      console.error("채팅방 삭제 에러:", error);
-      throw error;
-    }
+  // 채팅방 ID를 사용하여 채팅방 삭제
+  async deleteChatRoomById(chatRoomId) {
+    const result = await ChatRoom.findByIdAndDelete(chatRoomId);
+    return result;
   }
 }
 
-class ChatService {
-  // 채팅 생성
-  async createChat(chatData) {
-    try {
-      const chat = new Chat(chatData);
-      const savedChat = await chat.save();
-      return savedChat;
-    } catch (error) {
-      console.error("채팅 생성 에러:", error);
-      throw error;
-    }
-  }
+const chatModel = new ChatModel();
+const chatRoomModel = new ChatRoomModel();
 
-  // 모든 채팅 조회
-  async getAllChats() {
-    try {
-      const chats = await Chat.find();
-      return chats;
-    } catch (error) {
-      console.error("채팅 조회 에러:", error);
-      throw error;
-    }
-  }
-
-  // 특정 채팅 조회
-  async getChatById(chatId) {
-    try {
-      const chat = await Chat.findById(chatId);
-      return chat;
-    } catch (error) {
-      console.error("채팅 조회 에러:", error);
-      throw error;
-    }
-  }
-
-  // 채팅 갱신
-  async updateChat(chatId, updateData) {
-    try {
-      const updatedChat = await Chat.findByIdAndUpdate(chatId, updateData, {
-        new: true,
-      });
-      return updatedChat;
-    } catch (error) {
-      console.error("채팅 갱신 에러:", error);
-      throw error;
-    }
-  }
-
-  // 채팅 삭제
-  async deleteChat(chatId) {
-    try {
-      await Chat.findByIdAndDelete(chatId);
-      console.log("채팅이 삭제되었습니다.");
-    } catch (error) {
-      console.error("채팅 삭제 에러:", error);
-      throw error;
-    }
-  }
-}
-
-const chatRoomService = new ChatRoomService();
-const chatService = new ChatService();
-
-export { chatRoomService, chatService };
+export { chatModel, chatRoomModel };
