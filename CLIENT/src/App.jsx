@@ -1,9 +1,21 @@
-import logo from "./logo.svg";
+
+
+import './App.css';
+import { HomePage } from "./home_page";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Main from './main/main_page';
 import "./App.css";
-import Main from "./main/main_page";
-import Login from "./log_in/login_page";
+
 function App() {
-  return <Login />;
+  return (
+    <Main />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+
 }
 
 export default App;
