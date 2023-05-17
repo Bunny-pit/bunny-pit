@@ -7,7 +7,7 @@ const bunnyTalkRouter = new Router();
 bunnyTalkRouter.post(
   "/bunnyTalk/new-talk",
   loginRequired,
-  mainTalkService.createPst
+  mainTalkService.createPost
 );
 
 // 모든 게시물 불러오기

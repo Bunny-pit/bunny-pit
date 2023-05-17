@@ -9,7 +9,6 @@ const postSchema = new Schema({
   // 작성자 프로필 사진 url 경로
   profilePicture: {
     type: String,
-    required: true,
   },
   userId: {
     type: Schema.Types.ObjectId,

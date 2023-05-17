@@ -14,8 +14,10 @@ class MainTalkService {
 
       // 새로운 게시글 db에 저장
       const newPost = await MainTalkModel.create({
+        userNickName,
         content,
         userId,
+        createdAt,
       });
 
       // 저장된 게시글과 성공 메세지 전송
