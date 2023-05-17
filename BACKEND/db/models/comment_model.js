@@ -25,7 +25,8 @@ class CommentModel {
 
   // 댓글 조회
   async getAllCommentsByPostId(postId) {
-    const comments = await Comment.find({ postId: postId }).populate("userId");
+    const comments = await Comment.find({ postId }).populate("userId");
+
     return comments;
   }
 
