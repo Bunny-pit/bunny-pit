@@ -20,24 +20,34 @@ export function ChatPage() {
               className={chat_style.input}
               type="text"
               placeholder="아이디 검색하기"
+              onChange={(e) => {
+                e.preventDefault();
+                console.log(e.target.value);
+              }}
             />
           </div>
-          <div className={chat_style.message_container}>
-            <div
-              className={chat_style.message_wrapper}
-              onClick={() => {
-                console.log("아직 준비중이에요 ㅋㅋ");
-              }}
-            >
-              <img src="/assets/profile1.png" alt="프로필 사진" />
-              <div className={chat_style.text}>
-                <div className={chat_style.message_id}>Cute_hyeon</div>
-                <div className={chat_style.message_date}>1일 전에 보냄</div>
-              </div>
-            </div>
-          </div>
+          <Message userId={"test"} />
         </div>
       </div>
     </>
+  );
+}
+
+function Message({ userId }) {
+  return (
+    <div className={chat_style.message_container}>
+      <div
+        className={chat_style.message_wrapper}
+        onClick={() => {
+          console.log("아직 준비중이에요 ㅋㅋ");
+        }}
+      >
+        <img src="/assets/profile1.png" alt="프로필 사진" />
+        <div className={chat_style.text}>
+          <div className={chat_style.message_id}>{userId}Cute_hyeon</div>
+          <div className={chat_style.message_date}>1일 전에 보냄</div>
+        </div>
+      </div>
+    </div>
   );
 }
