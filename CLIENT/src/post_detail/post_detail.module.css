@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+}
+.container .wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+.header {
+  width: 100%;
+  padding: 40px 0;
+  border-bottom: 1px solid #fb7c7c;
+  display: flex;
+  flex-direction: row;
+}
+
+.header button {
+  width: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: #fff;
+}
+.header button img {
+  height: 30px;
+}
+.header .header_title {
+  width: 100%;
+  text-align: center;
+}
+.header .header_title h2 {
+  font-size: 32px;
+  color: #fb7c7c;
+}

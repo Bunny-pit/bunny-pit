@@ -162,7 +162,7 @@ function MainUserHome() {
 
     try {
       await navigator.clipboard.writeText(currentPageUrl);
-      alert("Url이 복사 되었습니다!");
+      alert("Url이 복사 되었습니다! 해당 Url을 친구에게 공유하세요!");
     } catch (err) {
       alert("Url 복사에 실패했습니다.", err);
     }
