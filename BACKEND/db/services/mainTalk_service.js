@@ -8,7 +8,6 @@ class MainTalkService {
       const { content } = req.body;
       const userId = req.currentUserId;
       const userNickName = req.currentUserNickName;
-      console.log(userNickName);
       const createdAt = new Date();
       // 내용 안적으면 에러 메세지
       if (!content) {
@@ -22,6 +21,8 @@ class MainTalkService {
         userId,
         createdAt,
       });
+
+      console.log(userNickName);
 
       // 저장된 게시글과 성공 메세지 전송
       res
