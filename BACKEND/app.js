@@ -5,6 +5,7 @@ import errorHandler from "./db/middlewares/error_handler.js";
 import { postRouter } from "./db/routers/post_router.js";
 import { commentRouter } from "./db/routers/comment_router.js";
 import { userRouter } from "./db/routers/user_router.js";
+import { bunnyTalkRouter } from "./db/routers/mainTalk_router";
 
 // server open
 const app = express();
@@ -38,6 +39,9 @@ app.use("/api/posts", postRouter);
 
 // comment 라우터 사용
 app.use("/api/comments", commentRouter);
+
+// comment 라우터 사용
+app.use("/api/bunnyTalk", bunnyTalkRouter);
 
 // 에러 핸들러 미들웨어 사용
 app.use(errorHandler);
