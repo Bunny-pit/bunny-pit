@@ -7,6 +7,9 @@ class MainTalkService {
       // req에서 userId와 내용 가져옴
       const { content } = req.body;
       const userId = req.currentUserId;
+      const userNickName = req.currentUserNickName;
+      console.log(userNickName);
+      const createdAt = new Date();
       // 내용 안적으면 에러 메세지
       if (!content) {
         throw new Error("내용을 입력해주세요.");
