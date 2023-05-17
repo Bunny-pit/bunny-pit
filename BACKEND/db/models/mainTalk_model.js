@@ -11,10 +11,9 @@ class MainTalkModel {
   }
 
   // 전체 게시글 조회
-  async findAll() {
-    // populate를 사용하여 참조된 User에서 사용자 정보 가져옴
-    const posts = await MainTalk.find({}).populate("author");
-    return posts;
+  async getAllpost() {
+    // 모든 게시물 조회 메서드
+    return MainTalk.find().sort({ creationDate: -1 });
   }
 
   // 게시글 id를 사용하여 게시글 삭제
