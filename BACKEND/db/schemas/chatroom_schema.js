@@ -1,15 +1,25 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema } from "mongoose";
 
-// 채팅방 스키마
 const chatRoomSchema = new Schema({
-  participants: [
+  user1: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  user2: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  messages: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chat",
+      default: [],
     },
   ],
 });
 
-const ChatRoom = mongoose.model("ChatRoom", chatRoomSchema);
+// 채팅방 스키마 정의
 
-export default ChatRoom;
+export { chatRoomSchema };
