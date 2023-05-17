@@ -19,7 +19,7 @@ const Register = () => {
             <input type="text" placeholder="김버니" autoComplete="on" />
           </div>{" "}
           <div className={classname.nickname}>
-            <label htmlFor="nickname-input">이메일</label>
+            <label htmlFor="nickname-input">닉네임</label>
             <input type="text" placeholder="bunny_1234" autoComplete="on" />
           </div>
           <div className={classname.email}>
