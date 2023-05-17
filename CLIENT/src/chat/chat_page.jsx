@@ -26,14 +26,58 @@ export function ChatPage() {
               }}
             />
           </div>
-          <Message userId={"test"} />
+          <Message
+            userId={"cute_hyeon"}
+            img={"assets/profile1.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"navi_rabbit12"}
+            img={"assets/profile2.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"lets_drinkWine"}
+            img={"assets/profile3.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"cartoon_writer"}
+            img={"assets/profile4.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"cute_hansome_gang"}
+            img={"assets/profile5.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"cute_hansome_gang"}
+            img={"assets/profile5.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"cute_hansome_gang"}
+            img={"assets/profile5.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"cute_hansome_gang"}
+            img={"assets/profile5.png"}
+            date={"1일"}
+          />
+          <Message
+            userId={"cute_hansome_gang"}
+            img={"assets/profile5.png"}
+            date={"1일"}
+          />
         </div>
       </div>
     </>
   );
 }
 
-function Message({ userId }) {
+function Message(props) {
   return (
     <div className={chat_style.message_container}>
       <div
@@ -42,10 +86,10 @@ function Message({ userId }) {
           console.log("아직 준비중이에요 ㅋㅋ");
         }}
       >
-        <img src="/assets/profile1.png" alt="프로필 사진" />
+        <img src={props.img} alt="프로필 사진" />
         <div className={chat_style.text}>
-          <div className={chat_style.message_id}>{userId}Cute_hyeon</div>
-          <div className={chat_style.message_date}>1일 전에 보냄</div>
+          <div className={chat_style.message_id}>{props.userId}</div>
+          <div className={chat_style.message_date}>{props.date} 전에 보냄</div>
         </div>
       </div>
     </div>
