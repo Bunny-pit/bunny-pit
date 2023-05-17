@@ -14,6 +14,7 @@ class CommentModel {
     const post = await postModel.findById(postId);
     // 찾은 게시글의 댓글 배열에 새로운 게시글 추가
     post.comments.push(newComment._id);
+
     await post.save();
 
     return {

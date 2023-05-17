@@ -7,9 +7,9 @@ class CommentService {
     try {
       const { content } = req.body;
 
-      const postId = req.params.id;
+      const postId = req.params.postId;
 
-      const author = req.user.id;
+      const userId = req.currentUserId;
 
       if (!content) {
         throw new Error("댓글을 입력하세요.");
@@ -17,7 +17,7 @@ class CommentService {
 
       const { post, newComment } = await commentModel.addComment(postId, {
         content,
-        author,
+        userId,
       });
 
       res
@@ -31,7 +31,7 @@ class CommentService {
   // 댓글 조회 로직
   getComments = async (req, res, next) => {
     try {
-      const postId = req.params.id;
+      const postId = req.params.postId;
 
       const comments = await commentModel.getAllCommentsByPostId(postId);
 
@@ -78,7 +78,7 @@ class CommentService {
   deleteComment = async (req, res, next) => {
     try {
       const { postId, commentId } = req.params;
-      const userId = req.user.id;
+      const userId = req.currentUserId;
 
       const comment = await commentModel.findById(commentId);
 
@@ -86,7 +86,7 @@ class CommentService {
         throw new Error("댓글을 찾을 수 없습니다.");
       }
 
-      if (comment.author !== userId) {
+      if (comment.userId._id.toString() !== userId) {
         throw new Error("댓글을 삭제할 권한이 없습니다.");
       }
 
@@ -112,7 +112,7 @@ class CommentService {
   commentLike = async (req, res, next) => {
     try {
       const commentId = req.params.id;
-      const userId = req.user.id;
+      const userId = req.currentUserId;
 
       const comment = await commentModel.toggleLike(commentId, userId);
 
