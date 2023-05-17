@@ -6,6 +6,7 @@ export function ChatPage() {
   return (
     <>
       <div className={chat_style.container}>나는 짱이다</div>
+      <div>이건 테스트!!</div>
     </>
   );
 }
