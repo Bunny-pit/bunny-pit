@@ -12,7 +12,7 @@ commentRouter.post(
 
 // 댓글 삭제
 commentRouter.delete(
-  "/delete-comment/:commentId",
+  "/delete-comment/:postId/:commentId",
   loginRequired,
   commentService.deleteComment
 );
@@ -26,7 +26,7 @@ commentRouter.get(
 
 // 댓글 좋아요
 commentRouter.post(
-  "/comment-like:commentId",
+  "/comment-like/:commentId",
   loginRequired,
   commentService.commentLike
 );
