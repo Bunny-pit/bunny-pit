@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-import { CommentSchema } from "../schemas/comment_schema";
-import PostModel from "./post_model";
+import { CommentSchema } from "../schemas/comment_schema.js";
+import { postModel } from "./post_model.js";
 
 const Comment = mongoose.model("comments", CommentSchema);
-const postModel = new PostModel();
 
 class CommentModel {
   // 댓글 생성 및 게시글에 댓글 추가
@@ -24,6 +23,12 @@ class CommentModel {
   }
 
   // 댓글 조회
+  async getAllCommentsByPostId(postId) {
+    const comments = await Comment.find({ postId: postId }).populate("userId");
+    return comments;
+  }
+
+  // 댓글 조회 (상세)
   async findById(commentId) {
     // populate로 받아온 사용자 정보와 댓글 id 조회하기
     const comment = await Comment.findById(commentId).populate("userId");
@@ -65,4 +70,6 @@ class CommentModel {
   }
 }
 
-export default CommentModel;
+const commentModel = new CommentModel();
+
+export { commentModel };

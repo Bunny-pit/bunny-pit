@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { PostSchema } from "../schemas/post_schema";
+import { PostSchema } from "../schemas/post_schema.js";
 
 const Post = mongoose.model("posts", PostSchema);
 
@@ -57,4 +57,6 @@ class PostModel {
   }
 }
 
-export default PostModel;
+const postModel = new PostModel();
+
+export { postModel };

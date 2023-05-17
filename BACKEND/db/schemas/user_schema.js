@@ -21,6 +21,19 @@ const UserSchema = new Schema({
     type: String,
     default: "basic-user", //admin, disabled role존재
   },
+  userImage: {
+    type: String,
+    // required: true,
+  },
+  followers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  introduction: {
+    type: String,
+  },
 });
 
 export { UserSchema };
