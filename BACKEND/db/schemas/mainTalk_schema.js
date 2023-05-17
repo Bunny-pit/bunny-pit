@@ -1,18 +1,20 @@
 import mongoose from "mongoose";
 
 const postSchema = new Schema({
-  // 작성자
-  author: {
-    // 작성자 닉네임
-    userNickName: {
-      type: String,
-      required: true,
-    },
-    // 작성자 프로필 사진 url 경로
-    profilePicture: {
-      type: String,
-      required: true,
-    },
+  // 작성자 닉네임
+  userNickName: {
+    type: String,
+    required: true,
+  },
+  // 작성자 프로필 사진 url 경로
+  profilePicture: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
   // 게시글 내용
   content: {
