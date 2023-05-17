@@ -1,4 +1,4 @@
-import { MainTalkModel } from "../models/mainTalk_model.js";
+import { mainTalkModel } from "../models/mainTalk_model.js";
 
 class MainTalkService {
   // 게시글 작성 로직
@@ -13,7 +13,7 @@ class MainTalkService {
       }
 
       // 새로운 게시글 db에 저장
-      const newPost = await MainTalkModel.create({
+      const newPost = await mainTalkModel.create({
         userNickName,
         content,
         userId,
@@ -34,7 +34,7 @@ class MainTalkService {
   getPosts = async (req, res, next) => {
     try {
       // db에서 모든 게시글 조회
-      const posts = await MainTalkModel.getAllpost();
+      const posts = await mainTalkModel.getAllpost();
       // 조회된 게시글 목록 전송
       res.status(200).json(posts);
     } catch (err) {
@@ -50,7 +50,7 @@ class MainTalkService {
       const postId = req.params.id;
       const userId = req.user.id;
 
-      const post = await MainTalkModel.deleteById(postId);
+      const post = await mainTalkModel.deleteById(postId);
 
       if (!post) {
         throw new Error("게시글을 찾을 수 없습니다.");
@@ -61,7 +61,7 @@ class MainTalkService {
       }
 
       // 해당 id의 게시글 db에서 삭제
-      const deletedPost = await MainTalkModel.findByIdAndDelete(postId);
+      const deletedPost = await mainTalkModel.findByIdAndDelete(postId);
 
       // 삭제된 게시글 정보와 성공 메세지 전송
       res
@@ -74,6 +74,6 @@ class MainTalkService {
   };
 }
 
-const mainTalkModelService = new MainTalkService();
+const mainTalkService = new MainTalkService();
 
-export { mainTalkModelService };
+export { mainTalkService };

@@ -5,7 +5,7 @@ import errorHandler from "./db/middlewares/error_handler.js";
 import { postRouter } from "./db/routers/post_router.js";
 import { commentRouter } from "./db/routers/comment_router.js";
 import { userRouter } from "./db/routers/user_router.js";
-import { bunnyTalkRouter } from "./db/routers/mainTalk_router";
+import { bunnyTalkRouter } from "./db/routers/mainTalk_router.js";
 
 // server open
 const app = express();

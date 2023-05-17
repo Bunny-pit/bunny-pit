@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-const postSchema = new Schema({
+const MainTalkSchema = new Schema({
   // 작성자 닉네임
   userNickName: {
     type: String,
@@ -27,6 +27,4 @@ const postSchema = new Schema({
   },
 });
 
-const Post = mongoose.model("Post", postSchema);
-
-export default Post;
+export { MainTalkSchema };
