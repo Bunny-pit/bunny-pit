@@ -2,19 +2,16 @@
   width: 100%;
 }
 .container .wrapper {
-  width: 90%;
+  width: 60%;
   margin: 0 auto;
 }
 
 .headerContainer {
-  width: 975px;
-  height: 60px;
+  width: 48%;
   margin: 0 auto;
-  padding: 0 px;
   box-sizing: border-box;
-
   display: flex;
-  justify-content: space-between;
+  position: relative;
   align-items: center;
 }
 
@@ -27,63 +24,134 @@
 }
 
 .header button {
-  width: 40px;
   border: none;
   cursor: pointer;
   background-color: #fff;
 }
+
 .header button img {
-  height: 30px;
+  height: 35px;
 }
+
 .header .header_title {
   width: 100%;
   text-align: center;
+  position: absolute;
 }
+
 .header .header_title h2 {
-  font-size: 32px;
+  font-size: 30px;
   color: #fb7c7c;
 }
 
 .mainSection {
-  width: 953px;
+  width: 50%;
   height: auto;
   margin: 0 auto;
-  padding: 30px 20px 0 20px;
+  padding: 1%;
   box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
 
 .userProfile {
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
+  background-color: pink;
+  width: 100%;
+  /* padding: 2%; */
+  justify-content: space-between;
+}
+
+.userProfileInfo {
+  display: flex;
+  align-items: center;
+}
+
+.userProfileImgContainer {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 10px;
+  background-color: #fb7c7c;
+  overflow: hidden;
 }
 
 .userProfileImg {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  margin-right: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.userNickName {
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowarp;
+  background-color: #fb7c7c;
 }
 
-.userNickName {
-  font-size: 18px;
-  font-weight: bold;
+.deleteButtonContainer {
+  background-color: #fb7c7c;
+}
+
+.postDeleteBtn {
+  height: 30px;
+}
+
+.postImage {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background-color: #fb7c7c;
 }
 
 .postImageImg {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.buttons {
+.postLikes {
+  width: 100%;
+  background-color: #fb7c7c;
+  font-weight: bolder;
+}
+
+.buttonsAndDate {
+  width: 100%;
+  margin-top: 1%;
+  margin-bottom: 2%;
+  background-color: pink;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+}
+
+.buttonsContainer {
+  display: flex;
+}
+
+.likeButton,
+.commentButton,
+.saveButton {
+  margin-right: 10px;
+  background-color: #fb7c7c;
+}
+
+.likeButton img {
+  margin-top: 5px;
+}
+
+.commentButton img {
+  margin-top: 6px;
+}
+
+.saveButton img {
+  width: 25px;
+  height: 25px;
+  margin: 8px 2px 0 2px;
 }
 
 .transparentButton {
@@ -97,23 +165,38 @@
   height: 30px;
 }
 
+.postDateContainer {
+  background-color: #fb7c7c;
+}
+
 .postDate {
   font-size: 14px;
+  font-weight: bolder;
 }
 
 .postContent {
   font-size: 16px;
   margin-bottom: 15px;
+  background-color: #fb7c7c;
 }
 
-.postComments {
+.postCommentsContainer {
   font-size: 14px;
+  background-color: #fb7c7c;
 }
 
-.postImage {
+.postComment {
   width: 100%;
-  margin-bottom: 15px;
-  position: relative;
+  height: 30px;
+  margin: 10px 0 10px 0;
+  background-color: aquamarine;
+  border-radius: 20px;
+  align-items: center;
+}
+
+.postComment p {
+  font-size: 13px;
+  padding: 7px 0 0 10px;
 }
 
 .arrow {
