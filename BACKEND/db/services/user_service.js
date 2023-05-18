@@ -3,7 +3,7 @@ import errorHandler from "../middlewares/error_handler.js";
 import "dotenv/config";
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import mongoose from "mongoose";
 const hashPassword = async (password) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   return hashedPassword;
@@ -11,7 +11,15 @@ const hashPassword = async (password) => {
 
 //회원가입
 const signUp = async (req, res, next) => {
-  const { userName, userNickName, email, password, role } = req.body;
+  const {
+    userName,
+    userNickName,
+    email,
+    password,
+    role,
+    userImage,
+    introduction,
+  } = req.body;
   if (!userName || !userNickName || !email || !password) {
     return next(new errorHandler(400, "모든 항목을 입력해주세요."));
   }
@@ -27,6 +35,8 @@ const signUp = async (req, res, next) => {
       email,
       password: hashedPassword,
       role,
+      userImage,
+      introduction,
     });
 
     await newUser.save();
@@ -212,27 +222,35 @@ const deleteUserByAdmin = async (req, res, next) => {
 //유저의 페이지 팔로우 토글
 const toggleFollowUsers = async (req, res, next) => {
   try {
-    const { userId, targetUserId } = req.params;
+    const { uid, targetUserId } = req.params;
 
     // 유저와 대상 유저 정보 가져오기
-    const user = await userModel.findById(userId);
+    const user = await userModel.findById(uid);
     const targetUser = await userModel.findById(targetUserId);
 
     if (!user || !targetUser) {
-      return next(new errorHandler("사용자 정보를 찾을 수 없습니다."));
+      throw new Error("사용자 정보를 찾을 수 없습니다.");
     }
 
     // 팔로우 토글
-    const isFollowing = user.following.includes(targetUserId);
+    const isFollowing = user.following && user.following.includes(targetUserId);
 
     if (isFollowing) {
       // 이미 팔로우 중인 경우 언팔로우
-      user.following.pull(targetUserId);
-      targetUser.followers.pull(userId);
+      if (user.following) {
+        user.following.pull(targetUserId);
+      }
+      if (targetUser.followers) {
+        targetUser.followers.pull(uid);
+      }
     } else {
       // 팔로우하지 않은 경우 팔로우
-      user.following.push(targetUserId);
-      targetUser.followers.push(userId);
+      if (user.following) {
+        user.following.push(targetUserId);
+      }
+      if (targetUser.followers) {
+        targetUser.followers.push(uid);
+      }
     }
 
     // 변경 사항 저장
@@ -242,45 +260,48 @@ const toggleFollowUsers = async (req, res, next) => {
     res.json({ message: "팔로우 토글 성공" });
   } catch (error) {
     console.error(error);
-    next(new errorHandler("팔로우 토글 실패"));
+    next(error);
   }
 };
 
-//마이페이지 프로필 생성
-const createUserProfile = async (req, res, next) => {
-  try {
-    const { userImage, introduction } = req.body;
-    const userId = req.user.userId;
+//마이페이지 프로필 생성 필요없는 로직 / 회원가입할떄 빈배열로 받기 일단
+// const createUserProfile = async (req, res, next) => {
+//   try {
+//     const { userImage, introduction } = req.body;
+//     const userId = req.params.uid;
 
-    // 유저 정보 업데이트
-    const updatedUser = await userModel.findByIdAndUpdate(
-      userId,
-      { userImage, introduction },
-      { new: true },
-    );
+//     // 유저 정보 업데이트
+//     const updatedUser = await userModel.update(
+//       {
+//         userId,
+//         userImage,
+//         introduction,
+//       },
+//       { new: true },
+//     );
+//     console.log(updatedUser);
+//     if (!updatedUser) {
+//       throw new Error("유저 정보를 업데이트할 수 없습니다.");
+//     }
 
-    if (!updatedUser) {
-      return next(new errorHandler(400, "유저 정보를 업데이트할 수 없습니다."));
-    }
-
-    res.status(200).json({
-      message: "마이페이지 정보 업데이트 성공",
-      data: {
-        userId: updatedUser.userId,
-        userImage: updatedUser.userImage,
-        introduction: updatedUser.introduction,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    next(new errorHandler(500, "마이페이지 정보 업데이트 실패"));
-  }
-};
+//     res.status(200).json({
+//       message: "마이페이지 정보 업데이트 성공",
+//       data: {
+//         userId: updatedUser.userId,
+//         userImage: updatedUser.userImage,
+//         introduction: updatedUser.introduction,
+//       },
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     next(new errorHandler(400, "마이페이지 정보 업데이트 실패"));
+//   }
+// };
 
 //마이프로필 조회
 const getUserProfile = async (req, res, next) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.params.uid;
 
     // 유저 정보 조회
     const userProfile = await userModel.findById(userId);
@@ -293,6 +314,7 @@ const getUserProfile = async (req, res, next) => {
       message: "마이페이지 정보 조회 성공",
       data: {
         userId: userProfile.userId,
+        userNickName: userProfile.userNickName,
         userImage: userProfile.userImage,
         introduction: userProfile.introduction,
       },
@@ -305,29 +327,29 @@ const getUserProfile = async (req, res, next) => {
 
 //마이페이지 프로필 수정
 const updateProfileInfo = async (req, res, next) => {
+  const { userImage, introduction } = req.body;
+  const userId = req.params.uid;
   try {
-    const { userImage, introduction } = req.body;
-    const userId = req.user.userId;
-
     // 사용자 정보 업데이트
-    const updatedUser = await userModel.findByIdAndUpdate(
-      userId,
-      { userImage, introduction },
-      { new: true },
-    );
+    const updatedUser = await userModel.findById(userId);
 
     if (!updatedUser) {
-      return next(
-        new errorHandler(400, "프로필 정보를 업데이트할 수 없습니다."),
-      );
+      throw new Error("프로필 정보를 수정할 수 없습니다.");
     }
+    const updateData = {};
+
+    updateData.userImage = userImage;
+    updateData.introduction = introduction;
+
+    await userModel.update({ userId, updateData });
+    const updatedUserProfile = await userModel.findById(userId);
 
     res.status(200).json({
       message: "프로필 정보 수정 성공",
       data: {
-        userId: updatedUser.userId,
-        userImage: updatedUser.userImage,
-        introduction: updatedUser.introduction,
+        userId: updatedUserProfile.userId,
+        userImage: updatedUserProfile.userImage,
+        introduction: updatedUserProfile.introduction,
       },
     });
   } catch (error) {
@@ -345,7 +367,7 @@ export {
   deleteUser,
   deleteUserByAdmin,
   toggleFollowUsers,
-  createUserProfile,
+  // createUserProfile,
   updateProfileInfo,
   getUserProfile,
 };

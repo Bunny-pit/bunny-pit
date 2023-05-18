@@ -11,7 +11,7 @@ import {
   deleteUser,
   deleteUserByAdmin,
   toggleFollowUsers,
-  createUserProfile,
+  // createUserProfile,
   updateProfileInfo,
   getUserProfile,
 } from "../services/user_service.js";
@@ -33,7 +33,11 @@ userRouter.patch("/users/:uid", loginRequired, updateUserInfo);
 userRouter.patch("/users/delete/:uid", loginRequired, deleteUser);
 
 //유저 페이지 팔로우 토글
-userRouter.post("/users/follow/:uid", loginRequired, toggleFollowUsers);
+userRouter.post(
+  "/users/follow/:uid/:targetUserId",
+  loginRequired,
+  toggleFollowUsers,
+);
 
 //관리자 회원정보 전체조회
 userRouter.get("/admin/users", adminOnly, adminUserInfo);
@@ -49,12 +53,12 @@ userRouter.get(
   getUserProfile,
 );
 //마이페이지 등록
-userRouter.post(
-  "/users/mypage/:uid",
-  loginRequired,
-  userImageUpload,
-  createUserProfile,
-);
+// userRouter.post(
+//   "/users/mypage/:uid",
+//   loginRequired,
+//   userImageUpload,
+//   createUserProfile,
+// );
 //마이페이지 수정
 userRouter.patch(
   "/users/mypage/:uid",
