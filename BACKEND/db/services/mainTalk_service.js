@@ -22,8 +22,6 @@ class MainTalkService {
         createdAt,
       });
 
-      console.log(userNickName);
-
       // 저장된 게시글과 성공 메세지 전송
       res
         .status(201)
@@ -52,7 +50,7 @@ class MainTalkService {
     try {
       // req.params에서 게시글id 가져옴
       const postId = req.params.id;
-      const userId = req.user.id;
+      const userId = req.currentUserId;
 
       const post = await mainTalkModel.deleteById(postId);
 
@@ -60,12 +58,13 @@ class MainTalkService {
         throw new Error("게시글을 찾을 수 없습니다.");
       }
 
-      if (post.userId !== userId) {
+      if (post.userId.toString() !== userId) {
         throw new Error("게시글을 삭제할 권한이 없습니다.");
       }
 
       // 해당 id의 게시글 db에서 삭제
-      const deletedPost = await mainTalkModel.findByIdAndDelete(postId);
+      const deletedPost = await mainTalkModel.deleteById(postId);
+      console.log(deletedPost);
 
       // 삭제된 게시글 정보와 성공 메세지 전송
       res

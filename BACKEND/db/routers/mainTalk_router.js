@@ -4,17 +4,16 @@ import { Router } from "express";
 const bunnyTalkRouter = new Router();
 
 // 새로운 게시물 생성
-bunnyTalkRouter.post(
-  "/bunnyTalk/new-talk",
-  loginRequired,
-  mainTalkService.createPost
-);
+bunnyTalkRouter.post("/new-talk", loginRequired, mainTalkService.createPost);
 
 // 모든 게시물 불러오기
-bunnyTalkRouter.get(
-  "/bunnyTalk/get-talk",
+bunnyTalkRouter.get("/get-talk", loginRequired, mainTalkService.getPosts);
+
+// 본인 게시물 삭제
+bunnyTalkRouter.delete(
+  "/delete/:id",
   loginRequired,
-  mainTalkService.getPosts
+  mainTalkService.deletePost
 );
 
 export { bunnyTalkRouter };
