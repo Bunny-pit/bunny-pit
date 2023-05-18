@@ -64,11 +64,15 @@ const logIn = async (req, res, next) => {
 
     //로그인 성공시 JWT토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
+    const token = jwt.sign(
+      { userId: user._id, role: user.role, userNickName: user.userNickName },
+      secretKey
+    );
     const userInfoWithUserToken = {};
     userInfoWithUserToken.token = token;
     userInfoWithUserToken.userId = user._id;
     userInfoWithUserToken.role = user.role;
+    userInfoWithUserToken.userNickName = user.userNickName;
 
     res.status(200).json({
       message: "로그인 성공",
