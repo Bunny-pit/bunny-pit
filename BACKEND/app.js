@@ -40,7 +40,7 @@ app.use("/api/posts", postRouter);
 // comment 라우터 사용
 app.use("/api/comments", commentRouter);
 
-// comment 라우터 사용
+// MainTalk 라우터 사용
 app.use("/api/bunnyTalk", bunnyTalkRouter);
 
 // 에러 핸들러 미들웨어 사용
