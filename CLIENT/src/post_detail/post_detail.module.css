@@ -55,3 +55,90 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+.userProfileImg {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.userNickName {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.postImageImg {
+  width: 100%;
+  object-fit: cover;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.transparentButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.postDate {
+  font-size: 14px;
+}
+
+.postContent {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.postComments {
+  font-size: 14px;
+}
+
+.postImage {
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  z-index: 1;
+  cursor: pointer;
+  display: none;
+}
+
+.postImage:hover .arrow {
+  display: block;
+}
+
+.prev {
+  left: 5px;
+}
+
+.next {
+  right: 5px;
+}
+
+.arrow img {
+  width: 25px;
+}
