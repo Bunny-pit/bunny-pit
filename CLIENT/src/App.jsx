@@ -6,7 +6,7 @@ import PostDetail from "./post_detail/post_detail";
 function App() {
   return (
     <>
-      {/* <Main /> */}
+      <Main />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />

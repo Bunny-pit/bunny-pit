@@ -5,6 +5,19 @@
   width: 90%;
   margin: 0 auto;
 }
+
+.headerContainer {
+  width: 975px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 0 px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .header {
   width: 100%;
   padding: 40px 0;
@@ -29,4 +42,16 @@
 .header .header_title h2 {
   font-size: 32px;
   color: #fb7c7c;
+}
+
+.mainSection {
+  width: 953px;
+  height: auto;
+  margin: 0 auto;
+  padding: 30px 20px 0 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }

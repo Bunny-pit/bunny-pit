@@ -26,37 +26,48 @@ function PostDetail() {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.cantainer}>
         <div className={styles.wrapper}>
           <div className={styles.header}>
-            <button onClick={handleGoBack}>
-              <img src="assets/arrow_back_icon.svg" alt="뒤로가기 버튼" />
-            </button>
-            <div className={styles.header_title}>
-              <h2>게시물</h2>
+            <div className={styles.headerContainer}>
+              <button onClick={handleGoBack}>
+                <img src="assets/arrow_back_icon.svg" alt="뒤로가기 버튼" />
+              </button>
+              <div className={styles.header_title}>
+                <h2>게시물</h2>
+              </div>
             </div>
           </div>
-          <div>
-            <img src={user.userImage} alt="프로필 이미지" />
-            <span>{user.userNickName}</span>
-          </div>
-          <div>
-            <img src={post.imageUrl[0]} alt="게시물 이미지" />
-          </div>
-          <div>
-            <button>
-              <img src="assets/like_icon.png" alt="좋아요 버튼" />
-            </button>
-            <button>
-              <img src="assets/comment_icon.png" alt="댓글 버튼" />
-            </button>
-            <button>
-              <img src="assets/post_save_icon.png" alt="게시물 저장 버튼" />
-            </button>
-            <span>{post.createdAt.toLocaleDateString()}</span>
-          </div>
-          <div>{post.content}</div>
-          <div>{post.comments}</div>
+          <main>
+            <section className={styles.mainSection}>
+              <div className={styles.userProfileImg}>
+                <img src={user.userImage} alt="프로필 이미지" />
+                <span>{user.userNickName}</span>
+              </div>
+              <div className={styles.postImage}>
+                <img src={post.imageUrl[0]} alt="게시물 이미지" />
+              </div>
+              <div className={styles.postLikes}>
+                좋아요 {post.likes.length}개
+              </div>
+              <div className={styles.buttons}>
+                <button>
+                  <img src="assets/like_icon.png" alt="좋아요 버튼" />
+                </button>
+                <button>
+                  <img src="assets/comment_icon.png" alt="댓글 버튼" />
+                </button>
+                <button>
+                  <img src="assets/post_save_icon.png" alt="게시물 저장 버튼" />
+                </button>
+                <span className={styles.postDate}>
+                  {post.createdAt.toLocaleDateString()}
+                </span>
+              </div>
+              <div className={styles.postContent}>{post.content}</div>
+              <div className={styles.postComments}>{post.comments}</div>
+            </section>
+          </main>
         </div>
       </div>
     </>
