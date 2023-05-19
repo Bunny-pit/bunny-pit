@@ -1,15 +1,15 @@
-import { ChatManager } from "../models/chat_model";
+import { ChatModel } from "../models/chat_model.js";
 
 class ChatService {
   constructor() {
-    // ChatManager 인스턴스 생성
-    this.chatManager = new ChatManager();
+    // ChatModel 인스턴스 생성
+    this.chatModel = new ChatModel();
   }
 
   async searchUsers(keyword) {
     try {
-      // ChatManager의 searchUsers 메서드 호출
-      const users = await this.chatManager.searchUsers(keyword);
+      // ChatModel의 searchUsers 메서드 호출
+      const users = await this.chatModel.searchUsers(keyword);
       return users;
     } catch (error) {
       // 오류 처리
@@ -17,11 +17,11 @@ class ChatService {
       throw error;
     }
   }
-
+  ChatSchema;
   async createChatRoom(participants) {
     try {
-      // ChatManager의 createChatRoom 메서드 호출
-      const newChat = await this.chatManager.createChatRoom(participants);
+      // ChatModel의 createChatRoom 메서드 호출
+      const newChat = await this.chatModel.createChatRoom(participants);
       return newChat;
     } catch (error) {
       // 오류 처리
@@ -32,8 +32,8 @@ class ChatService {
 
   async getAllChatRoomsByUser(userId) {
     try {
-      // ChatManager의 getAllChatRoomsByUser 메서드 호출
-      const chatRooms = await this.chatManager.getAllChatRoomsByUser(userId);
+      // ChatModel의 getAllChatRoomsByUser 메서드 호출
+      const chatRooms = await this.chatModel.getAllChatRoomsByUser(userId);
       return chatRooms;
     } catch (error) {
       // 오류 처리
@@ -44,12 +44,8 @@ class ChatService {
 
   async startChat(chatId, sender, message) {
     try {
-      // ChatManager의 startChat 메서드 호출
-      const chatRoom = await this.chatManager.startChat(
-        chatId,
-        sender,
-        message,
-      );
+      // ChatModel의 startChat 메서드 호출
+      const chatRoom = await this.chatModel.startChat(chatId, sender, message);
       return chatRoom;
     } catch (error) {
       // 오류 처리
@@ -60,8 +56,8 @@ class ChatService {
 
   async deleteChat(chatId) {
     try {
-      // ChatManager의 deleteChat 메서드 호출
-      const result = await this.chatManager.deleteChat(chatId);
+      // ChatModel의 deleteChat 메서드 호출
+      const result = await this.chatModel.deleteChat(chatId);
       return result;
     } catch (error) {
       // 오류 처리
@@ -72,8 +68,8 @@ class ChatService {
 
   async deleteChatRoom(chatId) {
     try {
-      // ChatManager의 deleteChatRoom 메서드 호출
-      const result = await this.chatManager.deleteChatRoom(chatId);
+      // ChatModel의 deleteChatRoom 메서드 호출
+      const result = await this.chatModel.deleteChatRoom(chatId);
       return result;
     } catch (error) {
       // 오류 처리
@@ -83,4 +79,6 @@ class ChatService {
   }
 }
 
-export { ChatService };
+const chatService = new ChatService();
+
+export { chatService };

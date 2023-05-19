@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import { ChatSchema } from "./chat_schema.js";
-import { UserSchema } from "./user_schema.js";
+import { ChatSchema } from "../schemas/chat_schema.js";
+import { UserSchema } from "../schemas/user_schema.js";
 
-const ChatModel = mongoose.model("Chat", ChatSchema);
-const UserModel = mongoose.model("User", UserSchema);
+const Chat = mongoose.model("Chat", ChatSchema);
+const User = mongoose.model("User", UserSchema);
 
-class ChatManager {
+class ChatModel {
   constructor() {
     // Mongoose 모델을 클래스의 속성으로 설정.
-    this.ChatModel = ChatModel;
-    this.UserModel = UserModel;
+    this.ChatModel = Chat;
+    this.UserModel = User;
   }
 
   // 가입자 검색
@@ -67,4 +67,4 @@ class ChatManager {
   }
 }
 
-export { ChatManager };
+export { ChatModel };
