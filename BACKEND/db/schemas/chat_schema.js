@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const ChatRoomSchema = new Schema({
+const ChatSchema = new Schema({
   participants: [
     {
       type: Schema.Types.ObjectId,
@@ -27,4 +27,4 @@ const ChatRoomSchema = new Schema({
 
 // 채팅 메시지 스키마 정의
 
-export { ChatRoomSchema };
+export { ChatSchema };

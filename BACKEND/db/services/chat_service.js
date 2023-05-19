@@ -1,129 +1,86 @@
-import { chatModel } from "../models/chat_model.js";
-import { userModel } from "../models/user_model.js";
+import { ChatManager } from "../models/chat_model";
 
 class ChatService {
-  // 채팅 생성 로직
-  createChat = async (req, res, next) => {
-    try {
-      const { chatRoomId, senderId, receiverId, message } = req.body;
+  constructor() {
+    // ChatManager 인스턴스 생성
+    this.chatManager = new ChatManager();
+  }
 
-      const chatData = {
-        chatRoomId,
-        senderId,
-        receiverId,
+  async searchUsers(keyword) {
+    try {
+      // ChatManager의 searchUsers 메서드 호출
+      const users = await this.chatManager.searchUsers(keyword);
+      return users;
+    } catch (error) {
+      // 오류 처리
+      console.error("사용자 검색 중 오류 발생:", error);
+      throw error;
+    }
+  }
+
+  async createChatRoom(participants) {
+    try {
+      // ChatManager의 createChatRoom 메서드 호출
+      const newChat = await this.chatManager.createChatRoom(participants);
+      return newChat;
+    } catch (error) {
+      // 오류 처리
+      console.error("채팅방 생성 중 오류 발생:", error);
+      throw error;
+    }
+  }
+
+  async getAllChatRoomsByUser(userId) {
+    try {
+      // ChatManager의 getAllChatRoomsByUser 메서드 호출
+      const chatRooms = await this.chatManager.getAllChatRoomsByUser(userId);
+      return chatRooms;
+    } catch (error) {
+      // 오류 처리
+      console.error("사용자의 채팅방 조회 중 오류 발생:", error);
+      throw error;
+    }
+  }
+
+  async startChat(chatId, sender, message) {
+    try {
+      // ChatManager의 startChat 메서드 호출
+      const chatRoom = await this.chatManager.startChat(
+        chatId,
+        sender,
         message,
-      };
-
-      const chat = await chatModel.createChat(chatData);
-
-      res.status(201).json({ message: "채팅이 생성되었습니다.", chat });
+      );
+      return chatRoom;
     } catch (error) {
-      next(error);
+      // 오류 처리
+      console.error("채팅 시작 중 오류 발생:", error);
+      throw error;
     }
-  };
+  }
 
-  // 모든 채팅 조회 로직
-  getAllChats = async (req, res, next) => {
+  async deleteChat(chatId) {
     try {
-      const chats = await chatModel.getAllChats();
-      res.status(200).json(chats);
+      // ChatManager의 deleteChat 메서드 호출
+      const result = await this.chatManager.deleteChat(chatId);
+      return result;
     } catch (error) {
-      next(error);
+      // 오류 처리
+      console.error("채팅 삭제 중 오류 발생:", error);
+      throw error;
     }
-  };
+  }
 
-  // 특정 채팅 조회 로직
-  getChatById = async (req, res, next) => {
+  async deleteChatRoom(chatId) {
     try {
-      const chatId = req.params.chatId;
-      const chat = await chatModel.getChatById(chatId);
-      res.status(200).json(chat);
+      // ChatManager의 deleteChatRoom 메서드 호출
+      const result = await this.chatManager.deleteChatRoom(chatId);
+      return result;
     } catch (error) {
-      next(error);
+      // 오류 처리
+      console.error("채팅방 삭제 중 오류 발생:", error);
+      throw error;
     }
-  };
-
-  // 채팅 갱신 로직
-  updateChat = async (req, res, next) => {
-    try {
-      const chatId = req.params.chatId;
-      const updateData = req.body;
-
-      const updatedChat = await chatModel.updateChat(chatId, updateData);
-
-      res
-        .status(200)
-        .json({ message: "채팅이 갱신되었습니다.", chat: updatedChat });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  // 채팅 삭제 로직
-  deleteChat = async (req, res, next) => {
-    try {
-      const chatId = req.params.chatId;
-      await chatModel.deleteChat(chatId);
-
-      res.status(200).json({ message: "채팅이 삭제되었습니다." });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  // 사용자 정보 가져오기
-  getUserById = async userId => {
-    try {
-      const user = await userModel.findById(userId);
-      return user;
-    } catch (error) {
-      throw new Error("사용자 정보를 가져오는 데 실패했습니다.");
-    }
-  };
-
-  // 상대방 정보 가져오기
-  getReceiverById = async receiverId => {
-    try {
-      const receiver = await userModel.findById(receiverId);
-      return receiver;
-    } catch (error) {
-      throw new Error("상대방 정보를 가져오는 데 실패했습니다.");
-    }
-  };
-
-  // 상대방 채팅방 생성 로직
-  createChatRoomWithReceiver = async (req, res, next) => {
-    try {
-      const { senderId, receiverId, message } = req.body;
-
-      const sender = await this.getUserById(senderId);
-      const receiver = await this.getReceiverById(receiverId);
-
-      // 상대방과의 대화를 위한 채팅방 생성 로직
-      const chatRoom = await chatModel.createChatRoom();
-
-      // sender와 receiver를 chatRoom에 추가
-      await chatModel.addUserToChatRoom(chatRoom._id, sender);
-      await chatModel.addUserToChatRoom(chatRoom._id, receiver);
-
-      // 채팅 생성 로직
-      const chatData = {
-        chatRoomId: chatRoom._id,
-        senderId,
-        receiverId,
-        message,
-      };
-      const chat = await chatModel.createChat(chatData);
-
-      res
-        .status(201)
-        .json({ message: "채팅방이 생성되었습니다.", chatRoom, chat });
-    } catch (error) {
-      next(error);
-    }
-  };
+  }
 }
 
-const chatService = new ChatService();
-
-export { chatService };
+export { ChatService };

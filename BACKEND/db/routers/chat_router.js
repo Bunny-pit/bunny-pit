@@ -1,20 +1,24 @@
+import { Router } from "express";
 import { loginRequired } from "../middlewares/login_required.js";
 import { chatService } from "../services/chat_service.js";
-import { Router } from "express";
 
 const chatRouter = Router();
 
-// 채팅 생성
-chatRouter.post("/create-chat", loginRequired, chatService.createChat);
+// 사용자 검색
+chatRouter.get("/search-users", loginRequired, chatService.searchUsers);
 
-// 모든 채팅 조회
-chatRouter.get("/get-all-chats", loginRequired, chatService.getAllChats);
+// 채팅방 생성
+chatRouter.post("/create-chat-room", loginRequired, chatService.createChatRoom);
 
-// 특정 채팅 조회
-chatRouter.get("/get-chat/:chatId", loginRequired, chatService.getChatById);
+// 사용자의 채팅방 조회
+chatRouter.get(
+  "/chat-rooms/:userId",
+  loginRequired,
+  chatService.getAllChatRoomsByUser,
+);
 
-// 채팅 갱신
-chatRouter.put("/update-chat/:chatId", loginRequired, chatService.updateChat);
+// 채팅 시작
+chatRouter.post("/start-chat/:chatId", loginRequired, chatService.startChat);
 
 // 채팅 삭제
 chatRouter.delete(
@@ -23,11 +27,11 @@ chatRouter.delete(
   chatService.deleteChat,
 );
 
-// 상대방 채팅방 생성
-chatRouter.post(
-  "/create-chat-room-with-receiver",
+// 채팅방 삭제
+chatRouter.delete(
+  "/delete-chat-room/:chatId",
   loginRequired,
-  chatService.createChatRoomWithReceiver,
+  chatService.deleteChatRoom,
 );
 
 export { chatRouter };
