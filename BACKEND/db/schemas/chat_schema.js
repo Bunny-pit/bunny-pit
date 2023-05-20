@@ -1,17 +1,22 @@
 import { Schema } from "mongoose";
 
 const ChatSchema = new Schema({
-  participants: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+  participant1: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  participant2: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   messages: [
     {
       sender: {
         type: Schema.Types.ObjectId,
         ref: "User",
+        required: true,
       },
       message: {
         type: String,
@@ -20,11 +25,10 @@ const ChatSchema = new Schema({
       timestamp: {
         type: Date,
         default: Date.now,
+        required: true,
       },
     },
   ],
 });
-
-// 채팅 메시지 스키마 정의
 
 export { ChatSchema };

@@ -5,7 +5,7 @@ import { chatService } from "../services/chat_service.js";
 const chatRouter = Router();
 
 // 사용자 검색
-chatRouter.get("/search-users", loginRequired, chatService.searchUsers);
+chatRouter.get("/search-users", loginRequired, chatService.searchUser);
 
 // 채팅방 생성
 chatRouter.post("/create-chat-room", loginRequired, chatService.createChatRoom);

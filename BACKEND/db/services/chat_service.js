@@ -1,78 +1,70 @@
 import { ChatModel } from "../models/chat_model.js";
 
 class ChatService {
-  constructor() {
-    // ChatModel 인스턴스 생성
-    this.chatModel = new ChatModel();
-  }
-
-  async searchUsers(keyword) {
+  // 사용자 검색
+  async searchUser(nickname) {
     try {
-      // ChatModel의 searchUsers 메서드 호출
-      const users = await this.chatModel.searchUsers(keyword);
+      const users = await ChatModel.findUser(nickname);
       return users;
     } catch (error) {
-      // 오류 처리
       console.error("사용자 검색 중 오류 발생:", error);
       throw error;
     }
   }
-  ChatSchema;
-  async createChatRoom(participants) {
+
+  // 새로운 채팅방 개설
+  async createChatRoom(loggedInUser, searchedUser) {
     try {
-      // ChatModel의 createChatRoom 메서드 호출
-      const newChat = await this.chatModel.createChatRoom(participants);
+      const newChat = await ChatModel.createChatRoom(
+        loggedInUser,
+        searchedUser,
+      );
       return newChat;
     } catch (error) {
-      // 오류 처리
-      console.error("채팅방 생성 중 오류 발생:", error);
+      console.error("채팅방 개설 중 오류 발생:", error);
       throw error;
     }
   }
 
+  // 유저의 채팅방 전체 조회
   async getAllChatRoomsByUser(userId) {
     try {
-      // ChatModel의 getAllChatRoomsByUser 메서드 호출
-      const chatRooms = await this.chatModel.getAllChatRoomsByUser(userId);
+      const chatRooms = await ChatModel.getAllChatRoomsByUser(userId);
       return chatRooms;
     } catch (error) {
-      // 오류 처리
-      console.error("사용자의 채팅방 조회 중 오류 발생:", error);
+      console.error("채팅방 조회 중 오류 발생:", error);
       throw error;
     }
   }
 
+  // 검색한 가입자와 채팅방에서 채팅 시작
   async startChat(chatId, sender, message) {
     try {
-      // ChatModel의 startChat 메서드 호출
-      const chatRoom = await this.chatModel.startChat(chatId, sender, message);
+      const chatRoom = await ChatModel.startChat(chatId, sender, message);
       return chatRoom;
     } catch (error) {
-      // 오류 처리
       console.error("채팅 시작 중 오류 발생:", error);
       throw error;
     }
   }
 
+  // 채팅 삭제
   async deleteChat(chatId) {
     try {
-      // ChatModel의 deleteChat 메서드 호출
-      const result = await this.chatModel.deleteChat(chatId);
+      const result = await ChatModel.deleteChat(chatId);
       return result;
     } catch (error) {
-      // 오류 처리
       console.error("채팅 삭제 중 오류 발생:", error);
       throw error;
     }
   }
 
+  // 채팅방 삭제
   async deleteChatRoom(chatId) {
     try {
-      // ChatModel의 deleteChatRoom 메서드 호출
-      const result = await this.chatModel.deleteChatRoom(chatId);
+      const result = await ChatModel.deleteChatRoom(chatId);
       return result;
     } catch (error) {
-      // 오류 처리
       console.error("채팅방 삭제 중 오류 발생:", error);
       throw error;
     }
