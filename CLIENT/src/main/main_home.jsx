@@ -136,7 +136,7 @@ function MainHomeVisitorBook() {
                     </div>
                     <div className={MainHomeStyles.visitorButton}>
                         <p>여기 프로필 가는 버튼</p>
-                        <p>여기 dm버튼</p>
+                        <p>여기 dm버튼 추가예정</p>
                     </div>
                 </div>
             </>
