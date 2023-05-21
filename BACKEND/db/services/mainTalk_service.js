@@ -67,9 +67,7 @@ class MainTalkService {
       console.log(deletedPost);
 
       // 삭제된 게시글 정보와 성공 메세지 전송
-      res
-        .status(200)
-        .json({ message: "게시글이 삭제되었습니다.", post: deletedPost });
+      res.status(200).json({ message: "게시글이 삭제되었습니다.", post });
     } catch (err) {
       // 에러 발생시 errorHandler 미들웨어로 전송
       next(err);
