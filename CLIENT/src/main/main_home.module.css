@@ -1,0 +1,25 @@
+.visitLog {
+
+  width: 975px;
+  height: 200px;
+  margin: 20px 0 25px 110px;
+
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.visitor{
+  flex-basis: 550px;
+  
+  color:blueviolet;
+  
+}
+.visitorButton{
+  color:brown;
+  flex-basis: 100px;
+  justify-content: flex-end;
+}
+.chatAndButton {
+  color: aqua;
+}
