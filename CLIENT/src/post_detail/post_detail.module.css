@@ -57,9 +57,8 @@
 .userProfile {
   display: flex;
   align-items: center;
-  background-color: pink;
+  /* background-color: pink; */
   width: 100%;
-  /* padding: 2%; */
   justify-content: space-between;
 }
 
@@ -74,7 +73,7 @@
   height: 60px;
   object-fit: cover;
   margin-right: 10px;
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
   overflow: hidden;
 }
 
@@ -87,15 +86,16 @@
   font-size: 13px;
   font-weight: bold;
   white-space: nowarp;
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
 }
 
-.deleteButtonContainer {
-  background-color: #fb7c7c;
-}
+/* .deleteButtonContainer {
+   background-color: #fb7c7c; 
+} */
 
 .postDeleteBtn {
   height: 30px;
+  cursor: pointer;
 }
 
 .postImage {
@@ -104,7 +104,7 @@
   width: 100%;
   height: 400px;
   overflow: hidden;
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
 }
 
 .postImageImg {
@@ -115,7 +115,7 @@
 
 .postLikes {
   width: 100%;
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
   font-weight: bolder;
 }
 
@@ -123,7 +123,7 @@
   width: 100%;
   margin-top: 1%;
   margin-bottom: 2%;
-  background-color: pink;
+  /* background-color: pink; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -137,7 +137,7 @@
 .commentButton,
 .saveButton {
   margin-right: 10px;
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
 }
 
 .likeButton img {
@@ -166,7 +166,7 @@
 }
 
 .postDateContainer {
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
 }
 
 .postDate {
@@ -177,12 +177,12 @@
 .postContent {
   font-size: 16px;
   margin-bottom: 15px;
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
 }
 
 .postCommentsContainer {
   font-size: 14px;
-  background-color: #fb7c7c;
+  /* background-color: #fb7c7c; */
 }
 
 .postComment {

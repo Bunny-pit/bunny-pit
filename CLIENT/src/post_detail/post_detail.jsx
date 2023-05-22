@@ -33,7 +33,7 @@ function PostDetail() {
 
   // 임시 쓰레기 데이터
   const user = {
-    userImage: "assets/logo.png",
+    userImage: "assets/test.png",
     userNickName: "닉네임인데 어쩔건데",
   };
 
