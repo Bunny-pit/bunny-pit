@@ -24,6 +24,7 @@ const UserSchema = new Schema({
   userImage: {
     type: String,
     // required: true,
+    default: "",
   },
   followers: [
     {
@@ -33,6 +34,7 @@ const UserSchema = new Schema({
   ],
   introduction: {
     type: String,
+    default: "",
   },
 });
 

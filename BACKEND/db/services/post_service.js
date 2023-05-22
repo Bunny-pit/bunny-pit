@@ -5,17 +5,21 @@ class PostService {
   createPost = async (req, res, next) => {
     try {
       // req에서 userId와 내용 가져옴
-      const { content } = req.body;
+      const { content, imageUrl } = req.body;
       const userId = req.currentUserId;
       // 내용 안적으면 에러 메세지
-      if (!content) {
-        throw new Error("내용을 입력해주세요.");
+      if (!content || !imageUrl) {
+        throw new Error("사진과 내용을 모두 작성해주세요.");
       }
+
+      const createdAt = new Date();
 
       // 새로운 게시글 db에 저장
       const newPost = await postModel.create({
         content,
         userId,
+        imageUrl,
+        createdAt,
       });
 
       // 저장된 게시글과 성공 메세지 전송

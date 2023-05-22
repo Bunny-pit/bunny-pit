@@ -18,6 +18,7 @@ class CommentService {
       const { post, newComment } = await commentModel.addComment(postId, {
         content,
         userId,
+        postId,
       });
 
       res
@@ -111,11 +112,12 @@ class CommentService {
   // 댓글 좋아요 로직
   commentLike = async (req, res, next) => {
     try {
-      const commentId = req.params.id;
+      const commentId = req.params.commentId;
+
       const userId = req.currentUserId;
 
       const comment = await commentModel.toggleLike(commentId, userId);
-
+      console.log(comment);
       res.status(200).json({ message: "좋아요가 반영되었습니다.", comment });
     } catch (err) {
       next(err);
