@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Grid, Modal, Button, Box } from "@mui/material"
-import styles from './main_page.module.css';
+import React, { useState, useEffect } from "react";
+import { Container, Grid, Modal, Button, Box } from "@mui/material";
+import styles from "./main_page.module.css";
+import axios from "axios";
 
 const ModalComponent = () => {
   const [open, setOpen] = React.useState(false);
@@ -15,25 +16,34 @@ const ModalComponent = () => {
 
   return (
     <div>
-      <img id="addPost"
-            width="28px"
-            height="28px"
-            src="/assets/add_icon.svg"
-            alt="add_icon"
-            onClick={handleOpen}
-            style={{cursor:'pointer'}}
-          />
+      <img
+        id="addPost"
+        width="28px"
+        height="28px"
+        src="/assets/add_icon.svg"
+        alt="add_icon"
+        onClick={handleOpen}
+        style={{ cursor: "pointer" }}
+      />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-          width: 650, height: 800, bgcolor: 'background.paper', boxShadow: 24, p: 4
-        }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 650,
+            height: 800,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
           <div className={styles.modalHeader}>
             <img
               className={styles.modalClose}
@@ -51,12 +61,19 @@ const ModalComponent = () => {
                 src="./assets/upload_icon.png"
                 width="180px"
                 height="200px"
-                alt="upload_icon" />
+                alt="upload_icon"
+              />
             </div>
             <div className={styles.modalUploadWrite}>
-              <input placeHolder={'문구입력...'} />
+              <input placeHolder={"문구입력..."} />
             </div>
-            <Button variant="contained" style={{ width: '650px', backgroundColor: '#FFD4D4' }}> 공유하기 </Button>
+            <Button
+              variant="contained"
+              style={{ width: "650px", backgroundColor: "#FFD4D4" }}
+            >
+              {" "}
+              공유하기{" "}
+            </Button>
           </div>
         </Box>
       </Modal>
@@ -64,14 +81,7 @@ const ModalComponent = () => {
   );
 };
 
-
-
-
-
 function MainHeader() {
-
-
-
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
@@ -97,7 +107,7 @@ function MainHeader() {
             alt="send_icon"
           />
           <ModalComponent />
-          
+
           <img
             width="28px"
             height="28px"
@@ -113,14 +123,51 @@ function MainHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }
 
 function MainUserHome() {
-  const [nickName, setNickName] = useState('유저 닉네임 state')
-  const [postCount, setPostCount] = useState(0)
-  const [follower, setFollower] = useState(0)
-  const [profileMessage, setProfileMessage] = useState('유저 상태 메시지')
+  const [nickName, setNickName] = useState("유저 닉네임 state");
+  const [postCount, setPostCount] = useState(0);
+  const [follower, setFollower] = useState(0);
+  const [profileMessage, setProfileMessage] = useState("유저 상태 메시지");
+
+  const [posts, setPosts] = useState([]); // 게시물 데이터 저장 state
+
+  useEffect(() => {
+    // db에서 게시물 가져오는 함수 호출
+    axiosGetPost();
+  }, []);
+
+  // jwt token에서 userId 추출해서 게시물 조회하는 api 호출
+  const axiosGetPost = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const url = "http://localhost:3000/api/posts/get-posts";
+      await axios.get(url, config).then((res) => setPosts(res.data));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // 친구 초대 버튼 클릭시 url 복사하는 함수
+  const copyToClipboard = async () => {
+    // 현재 페이지의 url 가져옴
+    const currentPageUrl = window.location.href;
+
+    try {
+      await navigator.clipboard.writeText(currentPageUrl);
+      alert("Url이 복사 되었습니다! 해당 Url을 친구에게 공유하세요!");
+    } catch (err) {
+      alert("Url 복사에 실패했습니다.", err);
+    }
+  };
+
   return (
     <main className={styles.main}>
       <section className={styles.mainSection}>
@@ -138,7 +185,7 @@ function MainUserHome() {
               <h2>{nickName}</h2>
             </div>
             <div className={styles.top}>
-              <button>친구 초대</button>
+              <button onClick={copyToClipboard}>친구 초대</button>
               <button>프로필 편집</button>
               <img
                 width="30px"
@@ -149,8 +196,12 @@ function MainUserHome() {
             </div>
             <div className={styles.middle}>
               <ul>
-                <li>게시물 <b>{postCount}</b></li>
-                <li>나를 좋아하는 버니들 <b>{follower}</b></li>
+                <li>
+                  게시물 <b>{postCount}</b>
+                </li>
+                <li>
+                  나를 좋아하는 버니들 <b>{follower}</b>
+                </li>
               </ul>
             </div>
             <h3>{profileMessage}</h3>
@@ -167,20 +218,36 @@ function MainUserHome() {
           </ul>
         </div>
         <div className={styles.mainPosts}>
-          <div className={styles.mainLayout}>
-            <div className={styles.mainCircle}>
-              <img width="32" height="32" src="./assets/camera_icon.svg" alt="camera_icon" />
+          {postCount === 0 ? (
+            <div className={styles.mainLayout}>
+              <div className={styles.mainCircle}>
+                <img
+                  width="32"
+                  height="32"
+                  src="./assets/camera_icon.svg"
+                  alt="camera_icon"
+                />
+              </div>
+              <h4>게시물 없음</h4>
             </div>
-            <h4>{postCount === 0 ? '게시물 없음' : '게시물 있음'}</h4>
-          </div>
+          ) : (
+            <Grid container sapcing={2}>
+              {posts.map((post, index) => (
+                <Grid item xs={4} key={index}>
+                  <img
+                    src={post.imageUrl}
+                    alt={`post-${index}`}
+                    style={{ width: "100%", heigth: "auto" }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </div>
       </section>
     </main>
-  )
+  );
 }
-
-
-
 
 export default function Main() {
   return (
@@ -190,11 +257,9 @@ export default function Main() {
       <MainUserHome />
       <Container>
         <Grid container spacing={1.5}>
-          <Grid item xs={12} sm={4} md={4}>
-
-          </Grid>
+          <Grid item xs={12} sm={4} md={4}></Grid>
         </Grid>
       </Container>
     </>
-  )
+  );
 }

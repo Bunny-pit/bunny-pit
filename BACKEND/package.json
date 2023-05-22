@@ -17,7 +17,9 @@
     "mongo": "^0.1.0",
     "mongoose": "^7.1.1",
     "node": "^20.1.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",
