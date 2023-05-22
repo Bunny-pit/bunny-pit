@@ -25,6 +25,7 @@ function loginRequired(req, res, next) {
 
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
     req.currentUserId = userId;
+    req.currentUserNickName = userNickName;
     req.role = role;
     req.currentUserNickName = userNickName;
 

@@ -13,15 +13,13 @@ class PostModel {
   // 전체 게시글 조회
   async findAll() {
     // populate를 사용하여 참조된 User, Comment에서 사용자 정보와 댓글 정보를 가져옴
-    const posts = await Post.find({}).populate("userId").populate("comments");
+    const posts = await Post.find({}).populate("userId");
     return posts;
   }
 
   // 게시글 id로 게시글 찾기
   async findById(postId) {
-    const post = await Post.findById(postId)
-      .populate("userId")
-      .populate("comments");
+    const post = await Post.findById(postId);
     return post;
   }
 
