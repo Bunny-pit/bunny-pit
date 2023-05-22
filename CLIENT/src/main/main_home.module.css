@@ -4,22 +4,34 @@
   height: 200px;
   margin: 20px 0 25px 110px;
 
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 
 }
-.visitor{
+
+.visitor {
+  display:flex;
+  height: 150px;
   flex-basis: 550px;
+
+  flex-direction: column;
   
-  color:blueviolet;
-  
+  gap:30px;
+  justify-content: space-between;
 }
-.visitorButton{
-  color:brown;
-  flex-basis: 100px;
-  justify-content: flex-end;
+
+.visitLog>.visitorButton {
+  color: brown;
 }
+
+.visitorButton img {
+  margin-left: 5px;
+}
+
 .chatAndButton {
-  color: aqua;
+  display: flex;
+  margin-left : 110px;
+  gap:10px;
+  
 }

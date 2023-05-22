@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Modal, Button, Box } from "@mui/material"
+import { Container, Grid, Modal, Button, Box, TextField} from "@mui/material"
+
 
 import UserMainStyles from './user_main.module.css';
 import MainHomeStyles from './main_home.module.css';
@@ -130,13 +131,35 @@ function MainHomeVisitorBook() {
                         />
                     </div>
                     <div className={MainHomeStyles.visitor}>
-                        <span>닉네임</span><br />
-                        <span>내용</span><br />
-                        <span>작성일</span><br />
+                        <div>
+                            닉네임 자리
+                        </div>
+                        <div>
+                            바위너구리 너무 귀엽고 땃쥐는 말할 것도 없고 곰고양이도 엄청 귀여움.
+                            회색담비는 뭐임? 그냥 키우고 싶다. ㄹㅇㅋㅋ
+                            참고로 글자수 제한은 140자임
+                        </div>
+                        <div>
+                            작성일 자리
+                        </div>
+
+
                     </div>
                     <div className={MainHomeStyles.visitorButton}>
-                        <p>여기 프로필 가는 버튼</p>
-                        <p>여기 dm버튼 추가예정</p>
+                        <img
+                            width="30px"
+                            height="30px"
+                            src="/assets/visitor_user_button.svg"
+                            alt="visitor_user_button"
+                            style={{ cursor: 'pointer' }}
+                        />
+                        <img
+                            width="30px"
+                            height="30px"
+                            src="/assets/visitor_chat_button.svg"
+                            alt="visitor_chat_button"
+                            style={{ cursor: 'pointer' }}
+                        />
                     </div>
                 </div>
             </>
@@ -149,7 +172,8 @@ function MainHomeVisitorBook() {
             </div>
             <Visitor />
             <div className={MainHomeStyles.chatAndButton}>
-                <p>여기 채팅창이랑 버튼</p>
+                <TextField type="text" style={{backgroundColor:"#FFF2F2", border : "1px", width : "900px"}} inputProps={{maxLength:140}}/>
+                <Button variant="contained" style={{ backgroundColor: "#FB7C7C" }} >등록</Button>
             </div>
         </div>
 
