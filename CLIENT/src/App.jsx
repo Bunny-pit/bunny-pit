@@ -1,18 +1,19 @@
-import { HomePage } from "./home/home_page";
-import { ChatPage } from "./chat/chat_page";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { Chatting } from "./chat/chatting";
-
+import { HomePage } from "./home_page";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Main from "./main/main_page";
+import PostDetail from "./post_detail/post_detail";
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/chat/" element={<ChatPage />} />
-        <Route path="/chat/:userId" element={<Chatting />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      {/* <Main /> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/postDetail" element={<PostDetail />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
