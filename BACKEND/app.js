@@ -34,7 +34,7 @@ mongoose
 
 // router
 // user 라우터 사용
-app.use("/api/users", userRouter);
+app.use("/api", userRouter);
 
 // post 라우터 사용
 app.use("/api/posts", postRouter);
