@@ -8,7 +8,7 @@
   margin: 10% auto;
   text-align: center;
 }
-.loginTitle {
+.registerTitle {
   font-weight: bold;
   font-size: 2rem;
 }
@@ -22,7 +22,9 @@
   display: inline-block;
 }
 .email,
-.password {
+.password,
+.name,
+.nickname {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,6 +41,24 @@
 }
 
 .password input {
+  width: 500px;
+  border-radius: 10px;
+  height: 50px;
+  margin: 4% auto;
+  border: #8e8e8e solid 1.5px;
+  padding: 0 10px;
+  font-size: 20px;
+}
+.name input {
+  width: 500px;
+  border-radius: 10px;
+  height: 50px;
+  margin: 4% auto;
+  border: #8e8e8e solid 1.5px;
+  padding: 0 10px;
+  font-size: 20px;
+}
+.nickname input {
   width: 500px;
   border-radius: 10px;
   height: 50px;

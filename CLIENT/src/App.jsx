@@ -13,6 +13,7 @@ function App() {
           <Route path="/postDetail" element={<PostDetail />} />
         </Routes>
       </BrowserRouter>
+
     </>
   );
 }
