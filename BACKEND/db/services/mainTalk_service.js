@@ -8,7 +8,6 @@ class MainTalkService {
       const { content } = req.body;
       const userId = req.currentUserId;
       const userNickName = req.currentUserNickName;
-
       const createdAt = new Date();
       // 내용 안적으면 에러 메세지
       if (!content) {
@@ -51,7 +50,7 @@ class MainTalkService {
     try {
       // req.params에서 게시글id 가져옴
       const postId = req.params.id;
-      const userId = req.user.id;
+      const userId = req.currentUserId;
 
       const post = await mainTalkModel.deleteById(postId);
 
@@ -59,17 +58,17 @@ class MainTalkService {
         throw new Error("게시글을 찾을 수 없습니다.");
       }
 
-      if (post.userId !== userId) {
+      if (post.userId.toString() !== userId) {
         throw new Error("게시글을 삭제할 권한이 없습니다.");
       }
 
       // 해당 id의 게시글 db에서 삭제
-      const deletedPost = await mainTalkModel.findByIdAndDelete(postId);
+      const deletedPost = await mainTalkModel.deleteById(postId);
+      console.log(deletedPost);
 
       // 삭제된 게시글 정보와 성공 메세지 전송
-      res
-        .status(200)
-        .json({ message: "게시글이 삭제되었습니다.", post: deletedPost });
+      // post로 내용 null 뜨는 오류 수정함
+      res.status(200).json({ message: "게시글이 삭제되었습니다.", post });
     } catch (err) {
       // 에러 발생시 errorHandler 미들웨어로 전송
       next(err);

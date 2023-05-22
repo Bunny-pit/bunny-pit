@@ -28,11 +28,11 @@ export class UserModel {
   }
 
   //userId로 유저 정보 수정하는 기능
-  async update({ userId, update }) {
+  async update({ userId, updateData }) {
     const filter = { _id: userId };
     const option = { new: true }; //회원정보 업데이트 이후의 문서를 반환
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
+    const updatedUser = await User.findOneAndUpdate(filter, updateData, option);
     return updatedUser;
   }
 

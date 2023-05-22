@@ -27,6 +27,7 @@ function loginRequired(req, res, next) {
     req.currentUserId = userId;
     req.currentUserNickName = userNickName;
     req.role = role;
+    req.currentUserNickName = userNickName;
 
     next();
   } catch (error) {
