@@ -76,9 +76,7 @@ const logIn = async (req, res, next) => {
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
     const token = jwt.sign(
       { userId: user._id, role: user.role, userNickName: user.userNickName },
-
       secretKey,
-
     );
     const userInfoWithUserToken = {};
     userInfoWithUserToken.token = token;

@@ -14,6 +14,7 @@ const PostSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+    required: true,
   },
   updatedAt: {
     type: Date,
@@ -32,6 +33,12 @@ const PostSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Comment",
+    },
+  ],
+  imageUrl: [
+    {
+      type: String,
+      required: true,
     },
   ],
 });
