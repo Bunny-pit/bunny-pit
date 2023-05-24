@@ -1,13 +1,18 @@
-import express from "express";
+import { express, app } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { http } from "http";
+import { Server } from "socket.io";
 import errorHandler from "./db/middlewares/error_handler.js";
 import { postRouter } from "./db/routers/post_router.js";
 import { commentRouter } from "./db/routers/comment_router.js";
 import { userRouter } from "./db/routers/user_router.js";
 import { chatRouter } from "./db/routers/chat_router.js";
 
+const io = new Server(http);
+
 // server open
+http.createServer(app);
 const app = express();
 dotenv.config();
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
