@@ -10,6 +10,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/chat/" element={<ChatPage />} />
+          <Route path="/chat/:userId" element={<Chatting />} />
           <Route path="/postDetail" element={<PostDetail />} />
         </Routes>
       </BrowserRouter>
