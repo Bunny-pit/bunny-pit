@@ -1,3 +1,4 @@
+
 import './App.css';
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 
@@ -10,6 +11,8 @@ import Main from "./main/main_page";
 //김종현
 import UserMain from './main/user_main';
 import MainHome from './main/main_home';
+//류이서
+import LogIn from "./log_in/login_page";
 
 function App() {
   return (
@@ -23,8 +26,11 @@ function App() {
         <Route path="/main/home" element={<MainHome />} />
         {/* 홈페이지 */}
         <Route path="/" element={<HomePage />} />
+         {/* 로그인 */}
+         <Route path="/login" element={<LogIn />} />
       </Routes>
     </BrowserRouter>
+
 
   );
 }
