@@ -1,0 +1,31 @@
+.container {
+  border: 1px solid black;
+}
+.container .wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.container .wrapper header {
+  border-bottom: 1px solid #fb7c7c;
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.container .wrapper header .back {
+  width: 30px;
+
+  border: 1px solid black;
+}
+.container .wrapper header .profileImg {
+  width: 100px;
+  margin-left: 30px;
+  border: 1px solid black;
+}
+.container .wrapper header .userId {
+  margin-left: 30px;
+  border: 1px solid black;
+}
