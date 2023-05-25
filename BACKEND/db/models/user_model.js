@@ -1,5 +1,5 @@
 import { model } from "mongoose";
-import { UserSchema } from "../schemas/user_schema";
+import { UserSchema } from "../schemas/user_schema.js";
 const User = model("User", UserSchema);
 
 export class UserModel {
@@ -28,12 +28,27 @@ export class UserModel {
   }
 
   //userId로 유저 정보 수정하는 기능
-  async update({ userId, update }) {
+  async update({ userId, updateData }) {
     const filter = { _id: userId };
-    const option = { returnOriginal: false }; //회원정보 업데이트 이후의 문서를 반환
+    const option = { new: true }; //회원정보 업데이트 이후의 문서를 반환
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
+    const updatedUser = await User.findOneAndUpdate(filter, updateData, option);
     return updatedUser;
+  }
+
+  //팔로워 토글 기능
+  async toggleFollower(userId, followerId) {
+    const user = await User.findById(userId);
+    const followerIndex = user.followers.indexOf(followerId);
+
+    if (followerIndex === -1) {
+      user.followers.push(followerId);
+    } else {
+      user.followers.splice(followerIndex, 1);
+    }
+    // 업데이트된 좋아요 상태를 db에 저장하고 반환함
+    await user.save();
+    return user;
   }
 }
 
