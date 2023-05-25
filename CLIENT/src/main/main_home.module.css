@@ -1,0 +1,38 @@
+.mainSection {
+
+  width: 975px;
+  height: auto;
+  margin: 0 auto;
+  padding: 30px 20px 0 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.visitor {
+  height: 150px;
+
+  display:flex;
+  flex-basis: 550px;
+  flex-direction: column;
+  gap:30px;
+  justify-content: space-between;
+}
+
+.visitorBtn img{
+  margin-left: 5px;
+}
+
+.visitorChatAndButton {
+
+  width: 975px;
+  height: auto;
+  margin: 0 auto;
+  padding: 30px 20px 0 20px;
+  box-sizing: border-box;
+
+  display: flex;
+
+  gap:10px;
+}
