@@ -47,11 +47,13 @@
 }
 
 .message_container {
-  text-decoration: none;
+  margin-top: 50px;
+  width: 100%;
+  background-color: #fff;
+  border: none;
 }
 
 .message_container .message_wrapper {
-  margin-top: 50px;
   cursor: pointer;
   background-color: #ffd4d4;
   border-radius: 150px;
@@ -59,7 +61,7 @@
 }
 .message_container .message_wrapper .text {
   padding-left: 30px;
-
+  text-align: left;
   width: 90%;
   font-size: 32px;
   display: flex;
