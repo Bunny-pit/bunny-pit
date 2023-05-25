@@ -134,26 +134,26 @@ function MainUserHome() {
 
   const [posts, setPosts] = useState([]); // 게시물 데이터 저장 state
 
-  useEffect(() => {
-    // db에서 게시물 가져오는 함수 호출
-    axiosGetPost();
-  }, []);
+  // useEffect(() => {
+  //   // db에서 게시물 가져오는 함수 호출
+  //   axiosGetPost();
+  // }, []);
 
-  // jwt token에서 userId 추출해서 게시물 조회하는 api 호출
-  const axiosGetPost = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const url = "http://localhost:3000/api/posts/get-posts";
-      await axios.get(url, config).then((res) => setPosts(res.data));
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+  // // jwt token에서 userId 추출해서 게시물 조회하는 api 호출
+  // const axiosGetPost = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     };
+  //     const url = "http://localhost:3000/api/posts/get-posts";
+  //     await axios.get(url, config).then((res) => setPosts(res.data));
+  //   } catch (err) {
+  //     alert(err.message);
+  //   }
+  // };
 
   // 친구 초대 버튼 클릭시 url 복사하는 함수
   const copyToClipboard = async () => {
@@ -218,31 +218,39 @@ function MainUserHome() {
           </ul>
         </div>
         <div className={styles.mainPosts}>
-          {postCount === 0 ? (
-            <div className={styles.mainLayout}>
-              <div className={styles.mainCircle}>
-                <img
-                  width="32"
-                  height="32"
-                  src="./assets/camera_icon.svg"
-                  alt="camera_icon"
-                />
-              </div>
-              <h4>게시물 없음</h4>
+          {/* <div className={styles.mainLayout}>
+            <div className={styles.mainCircle}>
+              <img
+                width="32"
+                height="32"
+                src="./assets/camera_icon.svg"
+                alt="camera_icon"
+              />
             </div>
-          ) : (
-            <Grid container sapcing={2}>
-              {posts.map((post, index) => (
-                <Grid item xs={4} key={index}>
-                  <img
-                    src={post.imageUrl}
-                    alt={`post-${index}`}
-                    style={{ width: "100%", heigth: "auto" }}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          )}
+            <h4>게시물 없음</h4>
+          </div> */}
+          <div className={styles.mainPosts}>
+            <div className={styles.postsGrid}>
+              <div className={styles.postItem}>
+                <img src="./assets/test.png" alt="post 1" />
+              </div>
+              <div className={styles.postItem}>
+                <img src="./assets/test.png" alt="post 2" />
+              </div>
+              <div className={styles.postItem}>
+                <img src="./assets/test.png" alt="post 3" />
+              </div>
+              <div className={styles.postItem}>
+                <img src="./assets/test.png" alt="post 4" />
+              </div>
+              <div className={styles.postItem}>
+                <img src="./assets/test.png" alt="post 5" />
+              </div>
+              <div className={styles.postItem}>
+                <img src="./assets/test.png" alt="post 6" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
