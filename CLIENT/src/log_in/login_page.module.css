@@ -1,0 +1,69 @@
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.header {
+  margin: 10% auto;
+  text-align: center;
+}
+.loginTitle {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.form {
+  width: 500px;
+  margin: 0 auto;
+}
+.form label {
+  font-size: 1.3rem;
+  text-align: left;
+  display: inline-block;
+}
+.email,
+.password {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 5%;
+}
+.email input {
+  width: 500px;
+  border-radius: 10px;
+  border: #8e8e8e solid 1.5px;
+  height: 50px;
+  margin: 4% auto;
+  padding: 0 10px;
+  font-size: 20px;
+}
+
+.password input {
+  width: 500px;
+  border-radius: 10px;
+  height: 50px;
+  margin: 4% auto;
+  border: #8e8e8e solid 1.5px;
+  padding: 0 10px;
+  font-size: 20px;
+}
+.btnContainer {
+  display: flex;
+  flex-direction: column;
+  width: 520px;
+  margin-bottom: 20%;
+}
+.loginBtn,
+.registerBtn {
+  background-color: #fb7c7c;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  height: 45px;
+  width: 100%;
+  font-size: 18px;
+  padding: 10px;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
