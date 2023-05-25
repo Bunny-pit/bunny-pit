@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Modal, Button, Box, TextField} from "@mui/material"
+import { Container, Grid, Modal, Button, Box, TextField } from "@mui/material"
 
 
 import UserMainStyles from './user_main.module.css';
@@ -119,9 +119,9 @@ function MainHomeHeader() {
 function MainHomeVisitorBook() {
     function Visitor() {
         return (
-            <>
-                <div className={MainHomeStyles.visitLog}>
-                    <div>
+            <div className={MainHomeStyles.main}>
+                <div className={MainHomeStyles.mainSection}>
+                    <div className={MainHomeStyles.userAvatar}>
                         <img
                             width="150px"
                             height="150px"
@@ -131,21 +131,18 @@ function MainHomeVisitorBook() {
                         />
                     </div>
                     <div className={MainHomeStyles.visitor}>
-                        <div>
-                            닉네임 자리
+                        <div className={MainHomeStyles.visitorTop}>
+                            유저 닉네임 자리
                         </div>
-                        <div>
-                            바위너구리 너무 귀엽고 땃쥐는 말할 것도 없고 곰고양이도 엄청 귀여움.
-                            회색담비는 뭐임? 그냥 키우고 싶다. ㄹㅇㅋㅋ
-                            참고로 글자수 제한은 140자임
+                        <div className={MainHomeStyles.visitorMid}>
+                            바위너구리, 땃쥐, 곰고양이
+                            글자수 제한 140
                         </div>
-                        <div>
-                            작성일 자리
+                        <div className={MainHomeStyles.visitorBottom}>
+                            코멘트 작성일 자리
                         </div>
-
-
                     </div>
-                    <div className={MainHomeStyles.visitorButton}>
+                    <div className={MainHomeStyles.visitorBtn}> 
                         <img
                             width="30px"
                             height="30px"
@@ -162,19 +159,19 @@ function MainHomeVisitorBook() {
                         />
                     </div>
                 </div>
-            </>
+                <div className={MainHomeStyles.visitorChatAndButton}>
+                    <TextField type="text" style={{ backgroundColor: "#FFF2F2", border: "1px", width: "850px" }} inputProps={{ maxLength: 140 }} />
+                    <Button variant="contained" style={{ backgroundColor: "#FB7C7C" }} >등록</Button>
+                </div>
+            </div>
         )
     }
     return (
         <div>
-            <div className="뉴 버니 톡">
+            <div className="뉴 버니 톡" style={{margin: "20px 0 20px 0"}}>
                 <h1 style={{ textAlign: "center", color: "#FB7C7C" }}>New Bunny Talk</h1>
             </div>
             <Visitor />
-            <div className={MainHomeStyles.chatAndButton}>
-                <TextField type="text" style={{backgroundColor:"#FFF2F2", border : "1px", width : "900px"}} inputProps={{maxLength:140}}/>
-                <Button variant="contained" style={{ backgroundColor: "#FB7C7C" }} >등록</Button>
-            </div>
         </div>
 
     )
